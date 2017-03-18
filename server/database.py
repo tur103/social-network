@@ -87,5 +87,11 @@ class DataBase(object):
         except sqlite3.IntegrityError:
             return False
 
+    def get_email(self, username):
+        cursor = self.database.execute("select username, email from user")
+        for raw in cursor:
+            if raw[0] == username:
+                return raw[1]
+
     def close_database(self):
         self.database.close()

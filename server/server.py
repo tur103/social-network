@@ -26,9 +26,14 @@ def main():
                 match = False
             database.close_database()
         elif CONTACT in client_request:
-            credentials = client_request.split("#")[1:]
             smtp_server = SMTP()
-            match = smtp_server.send_email(credentials[0], credentials[1])
+            credentials = client_request.split("#")[1:]
+            if len(credentials) == 3:
+                database = DataBase()
+                credentials[0] = database.get_email(credentials[2])
+                match = smtp_server.send_email(credentials[0], credentials[1], credentials[2])
+            else:
+                match = smtp_server.send_email(credentials[0], credentials[1])
         elif GET_FRAMES in client_request:
             folder = client_request.split("#")[1]
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")

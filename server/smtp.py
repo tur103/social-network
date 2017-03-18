@@ -7,20 +7,20 @@ class SMTP(object):
         object.__init__(self)
         self.user = MY_EMAIL
         self.password = MY_PASSWORD
-        self.frm = self.user
+        self.to = self.user
 
-    def send_email(self, to, text, username=None):
+    def send_email(self, frm, text, username=None):
         if not username:
             username = "Guest"
-        subject = username
+        subject = username + " --> " + frm
         message = """From: %s\nTo: %s\nSubject: %s\n\n%s
-        """ % (self.frm, ", ".join(to), subject, text)
+        """ % (frm, ", ".join(self.to), subject, text)
         try:
             server = smtplib.SMTP("smtp.gmail.com", 587)
             server.ehlo()
             server.starttls()
             server.login(self.user, self.password)
-            server.sendmail(self.frm, to, message)
+            server.sendmail(frm, self.to, message)
             server.close()
             return True
         except smtplib.SMTPException:

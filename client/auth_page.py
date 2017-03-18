@@ -111,16 +111,19 @@ class AuthPage(Page):
         global entry_username
         global entry_password
         global entry_email
-        request = "database#register#" + entry_username.get() + "#" + entry_password.get() + "#" + entry_email.get()
-        self.make_socket()
-        self.socket.send(request.encode())
-        answer = self.socket.recv(CHECK_BUFFER).decode()
-        self.socket.close()
-        if answer == OK:
-            save_username(entry_username.get())
-            self.enter(entry_username.get())
+        if entry_username.get() and entry_password.get() and entry_email.get():
+            request = "database#register#" + entry_username.get() + "#" + entry_password.get() + "#" + entry_email.get()
+            self.make_socket()
+            self.socket.send(request.encode())
+            answer = self.socket.recv(CHECK_BUFFER).decode()
+            self.socket.close()
+            if answer == OK:
+                save_username(entry_username.get())
+                self.enter(entry_username.get())
+            else:
+                messagebox.showwarning("INVALID", "Invalid username, password or email")
         else:
-            messagebox.showwarning("INVALID", "Invalid username, password or email")
+            messagebox.showwarning("INVALID", "Some of the details are missing")
 
     def enter(self, username):
         self.get_frames(username)
@@ -156,17 +159,20 @@ class AuthPage(Page):
     def email_user(self):
         global entry_address
         global entry_message
-        request = "contact#" + entry_address.get() + "#" + entry_message.get("1.0", END)
-        print(request)
-        self.make_socket()
-        self.socket.send(request.encode())
-        answer = self.socket.recv(CHECK_BUFFER).decode()
-        self.socket.close()
-        if answer == OK:
-            messagebox.showwarning("SUCCESS!", "Your email was sent successfully")
-            self.contact_us_page()
+        if entry_address.get() and entry_message.get("1.0", END):
+            request = "contact#" + entry_address.get() + "#" + entry_message.get("1.0", END)
+            print(request)
+            self.make_socket()
+            self.socket.send(request.encode())
+            answer = self.socket.recv(CHECK_BUFFER).decode()
+            self.socket.close()
+            if answer == OK:
+                messagebox.showwarning("SUCCESS!", "Your email was sent successfully")
+                self.contact_us_page()
+            else:
+                messagebox.showwarning("ERROR", "Your email was not sent from some reason.\nTry again later")
         else:
-            messagebox.showwarning("ERROR", "Your email was not sent from some reason.\nTry again later")
+            messagebox.showwarning("INVALID", "Some of the details are missing")
 
     def make_socket(self):
         self.socket = socket.socket()
