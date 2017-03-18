@@ -47,6 +47,9 @@ LOG_IN_TEXT = "Hello dear user\nYou are welcome to get into the software\nand" \
 REGISTER_TEXT = "Hello dear user\n If you are new with this software\nyou can " \
                 "easily register by few steps\nand get into an amazing media " \
                 "organizing\nand communication with friends"
+FORGOT_PASSWORD_TEXT = "Here you can restore your password\n" \
+                       "Enter your username and email\n" \
+                       "and we will send it to you"
 CONTACT_US_TEXT = "Hello dear user\nIf you have any problem or suggestion" \
                   "\nIf there is something that bother you about\nthis software " \
                   "you are welcome to send us an email\nand we will do our best to help you"
@@ -93,3 +96,4 @@ CHANGE_EMAIL = "Change Email"
 CHANGE_PASSWORD = "Change Password"
 CONFIRM_PASSWORD = "Confirm Password"
 SEND_US = "Send Us an Email"
+FORGOT_PASSWORD = "Forgot Password"

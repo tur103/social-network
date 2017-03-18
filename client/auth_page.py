@@ -17,6 +17,7 @@ class AuthPage(Page):
         self.log_in_page()
         menubutton.menu.add_command(label=LOG_IN, command=self.log_in_page)
         menubutton.menu.add_command(label=REGISTER, command=self.register_page)
+        menubutton.menu.add_command(label=FORGOT_PASSWORD, command=self.forgot_password_page)
         menubutton.menu.add_command(label=CONTACT_US, command=self.contact_us_page)
         return menubutton
 
@@ -78,6 +79,31 @@ class AuthPage(Page):
                         command=self.email_user)
         button.pack()
 
+    def forgot_password_page(self):
+        self.clear_screen(self.root)
+        self.add_elements(self.root, FORGOT_PASSWORD)
+        text = Label(self.root, bd=0, font=self.font1, text=FORGOT_PASSWORD_TEXT, pady=100)
+        text.pack()
+        global entry_username
+        global entry_email
+        label_username = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                               text=USERNAME, pady=20)
+        label_username.pack()
+        entry_username = Entry(self.root,  bg=GREEN, bd=5, font=self.font1,
+                               exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+        entry_username.pack()
+        label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=EMAIL, pady=20)
+        label_email.pack()
+        entry_email = Entry(self.root, bg=GREEN, bd=5, font=self.font1,
+                            exportselection=0, fg=RED, show="*", insertbackground=CYAN, insertwidth=10)
+        entry_email.pack()
+        l = Label(self.root, pady=20)
+        l.pack()
+        button = Button(self.root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+                        font=self.font1, fg=WHITE, text=FORGOT_PASSWORD,
+                        command=self.forgot_password)
+        button.pack()
+
     def display_structure(self):
         global entry_username
         global entry_password
@@ -122,6 +148,23 @@ class AuthPage(Page):
                 self.enter(entry_username.get())
             else:
                 messagebox.showwarning("INVALID", "Invalid username, password or email")
+        else:
+            messagebox.showwarning("INVALID", "Some of the details are missing")
+
+    def forgot_password(self):
+        global entry_username
+        global entry_email
+        if entry_username.get() and entry_email.get():
+            request = "forgot#" + entry_username.get + "#" + entry_email.get()
+            self.make_socket()
+            self.socket.send(request.encode())
+            answer = self.socket.recv(CHECK_BUFFER).decode()
+            self.socket.close()
+            if answer == OK:
+                self.forgot_password_page()
+                messagebox.showwarning("SUCCESS!", "Your password was sent to your email successfully")
+            else:
+                messagebox.showwarning("INVALID", "Invalid username, or email")
         else:
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
