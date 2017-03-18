@@ -1,5 +1,6 @@
 from home_page import *
 from my_wall import *
+from settings_page import *
 import socket
 
 
@@ -13,6 +14,8 @@ def add_menu(root, menubutton):
         menubutton.menu.add_command(label=GROUP_CHAT, command=home_page)
         menubutton.menu.add_command(label=DOWNLOAD_MOVIE, command=home_page)
         menubutton.menu.add_command(label=DOWNLOAD_YOUTUBE, command=home_page)
+        menubutton.menu.add_command(label=SETTINGS, command=settings_page)
+        menubutton.menu.add_command(label=LOG_OUT, command=home_page)
         menubutton.menu.add_checkbutton(label=OFFLINE, command=offline)
         menubutton.pack()
         menubutton.place(x=LEFTT)
@@ -28,6 +31,12 @@ def my_wall():
     wall = MyWall(global_root, username)
     wall.clear_screen(global_root)
     wall.add_elements(global_root, MY_WALL)
+
+
+def settings_page():
+    sett = SettingsPage(global_root, username)
+    sett.clear_screen(global_root)
+    sett.add_elements(global_root, SETTINGS_PAGE)
 
 
 def offline():
