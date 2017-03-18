@@ -161,7 +161,6 @@ class AuthPage(Page):
         global entry_message
         if entry_address.get() and entry_message.get("1.0", END):
             request = "contact#" + entry_address.get() + "#" + entry_message.get("1.0", END)
-            print(request)
             self.make_socket()
             self.socket.send(request.encode())
             answer = self.socket.recv(CHECK_BUFFER).decode()

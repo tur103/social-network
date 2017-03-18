@@ -2,6 +2,7 @@ from home_page import *
 from my_wall import *
 from settings_page import *
 import socket
+import auth_page
 
 
 def add_menu(root, menubutton):
@@ -48,7 +49,10 @@ def offline():
 
 
 def log_out():
-    pass
+    auth = auth_page.AuthPage(global_root)
+    menubutton_auth = auth.set_menu_button(global_root)
+    menubutton_auth.pack()
+    menubutton_auth.place(x=LEFTT)
 
 
 def save_username(user):
