@@ -15,8 +15,8 @@ def add_menu(root, menubutton):
         menubutton.menu.add_command(label=DOWNLOAD_MOVIE, command=home_page)
         menubutton.menu.add_command(label=DOWNLOAD_YOUTUBE, command=home_page)
         menubutton.menu.add_command(label=SETTINGS, command=settings_page)
-        menubutton.menu.add_command(label=LOG_OUT, command=home_page)
         menubutton.menu.add_checkbutton(label=OFFLINE, command=offline)
+        menubutton.menu.add_command(label=LOG_OUT, command=home_page)
         menubutton.pack()
         menubutton.place(x=LEFTT)
 

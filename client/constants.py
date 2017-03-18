@@ -90,3 +90,5 @@ BASE64 = "base64"
 TXT = "txt"
 
 CHANGE_EMAIL = "Change Email"
+CHANGE_PASSWORD = "Change Password"
+CONFIRM_PASSWORD = "Confirm Password"

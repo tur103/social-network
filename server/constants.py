@@ -21,3 +21,5 @@ DIRECTORY = "C:/work/facebookframes/"
 
 MY_EMAIL = "tur103103@gmail.com"
 MY_PASSWORD = "103103103"
+EMAIL = "email"
+PASSWORD = "password"

@@ -69,5 +69,23 @@ class DataBase(object):
             if raw[0] == username:
                 return raw[1]
 
+    def change_email(self, username, email):
+        try:
+            self.database.execute("update user set email = '%s' "
+                                  "where username = '%s'" % (email, username))
+            self.database.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
+
+    def change_password(self, username, password):
+        try:
+            self.database.execute("update user set password = '%s' "
+                                  "where username = '%s'" % (password, username))
+            self.database.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
+
     def close_database(self):
         self.database.close()

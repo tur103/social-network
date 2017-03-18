@@ -54,6 +54,16 @@ def main():
             new_file = open(DIRECTORY + folder + name + ".txt", "w")
             new_file.write(data)
             new_file.close()
+        elif CHANGE in client_request:
+            database = DataBase()
+            if EMAIL in client_request:
+                username = client_request.split("#")[2]
+                email = client_request.split("#")[3]
+                match = database.change_email(username, email)
+            elif PASSWORD in client_request:
+                username = client_request.split("#")[2]
+                password = client_request.split("#")[3]
+                match = database.change_password(username, password)
         else:
             match = False
         if match:
