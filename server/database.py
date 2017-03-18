@@ -93,5 +93,12 @@ class DataBase(object):
             if raw[0] == username:
                 return raw[1]
 
+    def get_password(self, username, email):
+        cursor = self.database.execute("select username, email, password from user")
+        for raw in cursor:
+            if raw[0] == username and raw[1] == email:
+                return raw[2]
+        return False
+
     def close_database(self):
         self.database.close()

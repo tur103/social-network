@@ -95,7 +95,7 @@ class AuthPage(Page):
         label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=EMAIL, pady=20)
         label_email.pack()
         entry_email = Entry(self.root, bg=GREEN, bd=5, font=self.font1,
-                            exportselection=0, fg=RED, show="*", insertbackground=CYAN, insertwidth=10)
+                            exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
         entry_email.pack()
         l = Label(self.root, pady=20)
         l.pack()
@@ -155,7 +155,7 @@ class AuthPage(Page):
         global entry_username
         global entry_email
         if entry_username.get() and entry_email.get():
-            request = "forgot#" + entry_username.get + "#" + entry_email.get()
+            request = "forgot#" + entry_username.get() + "#" + entry_email.get()
             self.make_socket()
             self.socket.send(request.encode())
             answer = self.socket.recv(CHECK_BUFFER).decode()

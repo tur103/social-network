@@ -69,6 +69,16 @@ def main():
                 username = client_request.split("#")[2]
                 password = client_request.split("#")[3]
                 match = database.change_password(username, password)
+        elif FORGOT in client_request:
+            smtp_server = SMTP()
+            database = DataBase()
+            username = client_request.split("#")[1]
+            email = client_request.split("#")[2]
+            password = database.get_password(username, email)
+            if password:
+                match = smtp_server.send_password(email, password)
+            else:
+                match = False
         else:
             match = False
         if match:

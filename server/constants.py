@@ -23,3 +23,8 @@ MY_EMAIL = "tur103103@gmail.com"
 MY_PASSWORD = "103103103"
 EMAIL = "email"
 PASSWORD = "password"
+FORGOT = "forgot"
+
+PASSWORD_TEXT = "Hello dear user! This is an email to restore your " \
+                "password from the social-network software. " \
+                "Your password is -->  "

@@ -25,3 +25,19 @@ class SMTP(object):
             return True
         except smtplib.SMTPException:
             return False
+
+    def send_password(self, to, password):
+        subject = "social-network: restore password"
+        text = PASSWORD_TEXT + password
+        message = """From: %s\nTo: %s\nSubject: %s\n\n%s
+        """ % (self.user, ", ".join(to), subject, text)
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.ehlo()
+            server.starttls()
+            server.login(self.user, self.password)
+            server.sendmail(self.user, to, message)
+            server.close()
+            return True
+        except smtplib.SMTPException:
+            return False
