@@ -76,7 +76,9 @@ MY_WALL_TEXT = "These is the place where all your life is drains into.\n" \
                "from your life in order to share your enjoyment with\n" \
                "all your friends."
 ADD_PAGE_TEXT = "Here you can send friendship requests to another users\n" \
-                "Friendship requests which have sent to you will appear here"
+                "Friendship requests which have sent to you will appear here\n" \
+                "To accept request type its username and click the button\n" \
+                "To decline request type its username + '-not' at the end"
 USERNAME = "username"
 PASSWORD = "password"
 EMAIL = "email"
@@ -95,6 +97,9 @@ GET_FRAMES = "getframes"
 BASE64 = "base64"
 CHAT = "chat"
 CHAT_FILE = "chat.txt"
+REQUEST = "request"
+FRIENDS = "friends"
+REQUESTS = "requests.txt"
 
 TXT = "txt"
 

@@ -181,8 +181,7 @@ class AuthPage(Page):
         if not os.path.exists(directory):
             os.mkdir(directory)
         directory += "/"
-        my_file = open(directory + CHAT_FILE, "w")
-        my_file.close()
+        open(directory + CHAT_FILE, "w").close()
         self.make_socket()
         request = GET_FRAMES + "#" + username
         self.socket.send(request.encode())
@@ -192,10 +191,12 @@ class AuthPage(Page):
             for frame in range(frames):
                 name = self.socket.recv(NAME_BUFFER).decode()
                 data = self.socket.recv(WALL_BUFFER)
-                if not os.path.exists(directory + name):
-                    new_file = open(directory + name, "wb")
-                    new_file.write(data)
-                    new_file.close()
+                if not CHAT in name and not REQUEST in name and not FRIENDS in name and name != OK:
+                    if not os.path.exists(directory + name):
+                        print(name)
+                        new_file = open(directory + name, "wb")
+                        new_file.write(data)
+                        new_file.close()
         except ValueError:
             #The user didn't update media yet
             pass

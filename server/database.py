@@ -58,7 +58,11 @@ class DataBase(object):
             return False
 
     def get_users(self):
-        return self.database.execute("select username from user")
+        cursor = self.database.execute("select username from user")
+        usernames_list = []
+        for raw in cursor:
+            usernames_list.append(raw[0])
+        return usernames_list
 
     def delete_user(self, username):
         self.database.execute("delete from user where username = %s" %

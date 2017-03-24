@@ -7,6 +7,7 @@ TEXT_BUFFER = 100
 
 OK = "OK"
 NO = "NO"
+NOT = "not"
 
 DATABASE = "database"
 LOG_IN = "login"
@@ -17,6 +18,8 @@ GET_FRAMES = "getframes"
 UPLOAD_PICTURE = "uploadpicture"
 UPLOAD_STATUS = "uploadstatus"
 GET_CHAT = "getchat"
+ADD_FRIEND = "addfriend"
+GET_REQUESTS = "getrequests"
 
 DIRECTORY = "C:/work/facebookframes/"
 
@@ -26,6 +29,8 @@ EMAIL = "email"
 PASSWORD = "password"
 FORGOT = "forgot"
 CHAT_FILE = "/chat.txt"
+FRIENDS = "/friends.txt"
+REQUESTS = "/requests.txt"
 
 PASSWORD_TEXT = "Hello dear user! This is an email to restore your " \
                 "password from the social-network software. " \
