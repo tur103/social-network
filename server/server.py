@@ -107,8 +107,8 @@ def main():
             user = client_request.split("#")[2]
             request_file = open(DIRECTORY + folder + REQUESTS, "r")
             data = request_file.read()
-            if user in data:
-                data = data.replace(user + "\n", "")
+            if user.split("-not")[0] in data:
+                data = data.replace(user.split("-not")[0] + "\n", "")
                 request_file.close()
                 request_file = open(DIRECTORY + folder + REQUESTS, "w")
                 request_file.write(data)
@@ -125,10 +125,16 @@ def main():
                 database = DataBase()
                 users_list = database.get_users()
                 if user in users_list:
-                    request_file = open(DIRECTORY + user + REQUESTS, "a")
-                    request_file.write(folder + "\n")
-                    request_file.close()
-                    match = True
+                    friend_file = open(DIRECTORY + folder + FRIENDS, "r")
+                    data = friend_file.read()
+                    friend_file.close()
+                    if user not in data:
+                        request_file = open(DIRECTORY + user + REQUESTS, "a")
+                        request_file.write(folder + "\n")
+                        request_file.close()
+                        match = True
+                    else:
+                        match = False
                 else:
                     match = False
         elif GET_REQUESTS in client_request:

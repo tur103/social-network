@@ -29,20 +29,23 @@ class AddFriends(Page):
     def add_friend(self):
         global entry_username
         username = entry_username.get()
-        if username:
-            request = "addfriend#" + self.username + "#" + username
-            sock = socket.socket()
-            sock.connect((SERVER, PORT))
-            sock.send(request.encode())
-            answer = sock.recv(CHECK_BUFFER).decode()
-            if answer == OK:
-                messagebox.showwarning("SUCCESS!", "Your friendship request was sent successfully")
-                self.clear_screen(self.root)
-                self.add_elements(self.root, ADD_FRIENDS)
-            else:
-                messagebox.showwarning("ERROR!", "Your friendship request was not sent\n"
-                                                 "1) this username is invalid\n"
-                                                 "2) You already sent friendship request for this username")
+        if self.username != username:
+            if username:
+                request = "addfriend#" + self.username + "#" + username
+                sock = socket.socket()
+                sock.connect((SERVER, PORT))
+                sock.send(request.encode())
+                answer = sock.recv(CHECK_BUFFER).decode()
+                if answer == OK:
+                    messagebox.showwarning("SUCCESS!", "Your friendship request was sent successfully")
+                    self.clear_screen(self.root)
+                    self.add_elements(self.root, ADD_FRIENDS)
+                else:
+                    messagebox.showwarning("ERROR!", "Your friendship request was not sent\n"
+                                                     "1) this username is invalid\n"
+                                                     "2) You already sent friendship request for this username")
+        else:
+            messagebox.showwarning("ERROR!", "Your cannot friendship yourself!")
 
     def show_requests(self):
         sock = socket.socket()
