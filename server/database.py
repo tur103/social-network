@@ -39,6 +39,8 @@ class DataBase(object):
                 value = 0
             if onof == 0:
                 value = 1
+        else:
+            value = int(value)
         self.database.execute("update user set online = %s where "
                               "username='%s'" % (value, username))
         self.database.commit()

@@ -19,6 +19,8 @@ def main():
             elif REGISTER in client_request:
                 credentials = client_request.split("#")[2:]
                 match = database.add_user(credentials)
+                if match:
+                    open(DIRECTORY + credentials[0] + CHAT_FILE, "w").close()
             elif CHANGE in client_request:
                 credentials = client_request.split("#")[2:]
                 database.update_user(credentials[0], credentials[1])

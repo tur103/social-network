@@ -40,16 +40,20 @@ def settings_page():
     sett.add_elements(global_root, SETTINGS_PAGE)
 
 
-def offline():
+def offline(value=None):
     global username
     sock = socket.socket()
     sock.connect((SERVER, PORT))
-    request = "database#change#" + username + "#change"
+    if value == 0:
+        request = "database#change#" + username + "#" + str(value)
+    else:
+        request = "database#change#" + username + "#change"
     sock.send(request.encode())
     sock.close()
 
 
 def log_out():
+    offline(0)
     global username
     username = None
     auth = auth_page.AuthPage(global_root)
