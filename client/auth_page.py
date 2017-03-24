@@ -191,9 +191,8 @@ class AuthPage(Page):
             for frame in range(frames):
                 name = self.socket.recv(NAME_BUFFER).decode()
                 data = self.socket.recv(WALL_BUFFER)
-                if not CHAT in name and not REQUEST in name and not FRIENDS in name and name != OK:
+                if name != OK:
                     if not os.path.exists(directory + name):
-                        print(name)
                         new_file = open(directory + name, "wb")
                         new_file.write(data)
                         new_file.close()

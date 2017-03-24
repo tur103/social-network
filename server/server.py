@@ -47,13 +47,14 @@ def main():
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
             client_socket.send(str(len(frames_list)).encode())
             for frame in frames_list:
-                name = frame.split("\\")[-1]
-                client_socket.send(name.encode())
-                file = open(frame, "rb")
-                data = file.read()
-                file.close()
-                client_socket.send(data)
-                match = NOT
+                if not CHAT in frame and not REQUEST in frame and not FRIEND in frame:
+                    name = frame.split("\\")[-1]
+                    client_socket.send(name.encode())
+                    file = open(frame, "rb")
+                    data = file.read()
+                    file.close()
+                    client_socket.send(data)
+            match = NOT
         elif UPLOAD_PICTURE in client_request:
             folder = client_request.split("#")[1] + "/"
             name = client_request.split("#")[2]

@@ -32,6 +32,10 @@ CHAT_FILE = "/chat.txt"
 FRIENDS = "/friends.txt"
 REQUESTS = "/requests.txt"
 
+CHAT = "chat"
+REQUEST = "request"
+FRIEND = "friend"
+
 PASSWORD_TEXT = "Hello dear user! This is an email to restore your " \
                 "password from the social-network software. " \
                 "Your password is -->  "
