@@ -79,6 +79,16 @@ def main():
                 match = smtp_server.send_password(email, password)
             else:
                 match = False
+        elif GET_CHAT in client_request:
+            user = client_request.split("#")[1]
+            my_file = open(DIRECTORY + user + CHAT_FILE, "r")
+            data = my_file.read()
+            if data:
+                client_socket.send(data.encode())
+            else:
+                client_socket.send(NO.encode())
+            my_file.close()
+            open(DIRECTORY + user + CHAT_FILE, "w").close()
         else:
             match = False
         if match:

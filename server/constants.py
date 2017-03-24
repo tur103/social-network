@@ -16,6 +16,7 @@ CONTACT = "contact"
 GET_FRAMES = "getframes"
 UPLOAD_PICTURE = "uploadpicture"
 UPLOAD_STATUS = "uploadstatus"
+GET_CHAT = "getchat"
 
 DIRECTORY = "C:/work/facebookframes/"
 
@@ -24,6 +25,7 @@ MY_PASSWORD = "103103103"
 EMAIL = "email"
 PASSWORD = "password"
 FORGOT = "forgot"
+CHAT_FILE = "/chat.txt"
 
 PASSWORD_TEXT = "Hello dear user! This is an email to restore your " \
                 "password from the social-network software. " \

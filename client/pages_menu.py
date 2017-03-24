@@ -41,6 +41,7 @@ def settings_page():
 
 
 def offline():
+    global username
     sock = socket.socket()
     sock.connect((SERVER, PORT))
     request = "database#change#" + username + "#change"
@@ -49,6 +50,8 @@ def offline():
 
 
 def log_out():
+    global username
+    username = None
     auth = auth_page.AuthPage(global_root)
     menubutton_auth = auth.set_menu_button(global_root)
     menubutton_auth.pack()

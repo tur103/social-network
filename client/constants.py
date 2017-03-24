@@ -84,11 +84,13 @@ SERVER = "127.0.0.1"
 PORT = 8820
 CHECK_BUFFER = 2
 NAME_BUFFER = 20
+CHAT_BUFFER = 500
 WALL_BUFFER = 300000
 OK = "OK"
 NO = "NO"
 GET_FRAMES = "getframes"
 BASE64 = "base64"
+CHAT_FILE = "chat.txt"
 
 TXT = "txt"
 

@@ -9,13 +9,22 @@ def main():
 
 
 def chat_receive():
+    user_folder = getpass.getuser()
+    directory = "c:/users/" + user_folder + "/downloads/facebook/chat.txt"
     while True:
         if threading.active_count() == 2:
-            my_socket = socket.socket()
-            my_socket.connect((SERVER, PORT))
-            username = get_username()
-            if username:
-                print(username)
+            if get_username():
+                username = get_username()
+                my_socket = socket.socket()
+                my_socket.connect((SERVER, PORT))
+                request = "getchat#" + username
+                my_socket.send(request.encode())
+                answer = my_socket.recv(CHAT_BUFFER).decode()
+                if answer != NO:
+                    my_file = open(directory, "a")
+                    my_file.write(answer)
+                    my_file.close()
+                my_socket.close()
             time.sleep(5)
         else:
             break

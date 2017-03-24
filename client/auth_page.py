@@ -181,6 +181,8 @@ class AuthPage(Page):
         if not os.path.exists(directory):
             os.mkdir(directory)
         directory += "/"
+        my_file = open(directory + CHAT_FILE, "w")
+        my_file.close()
         self.make_socket()
         request = GET_FRAMES + "#" + username
         self.socket.send(request.encode())
