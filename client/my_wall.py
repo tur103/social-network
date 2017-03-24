@@ -82,20 +82,21 @@ class MyWall(Page):
         xplace = 300
         yplace = 150
         for frame in frames_list:
-            if frame.split(".")[-1] == "txt":
-                file = open(frame, "r")
-                data = file.read()
-                file.close()
-                label = Label(self.root, text=data, font=self.font1)
-                label.pack()
-                label.place(x=xplace, y=yplace)
-                yplace += 70
-            else:
-                image = Image.open(frame)
-                image = image.resize((200, 200), Image.ANTIALIAS)
-                photo = ImageTk.PhotoImage(image)
-                label = Label(self.root, image=photo)
-                label.image = photo
-                label.pack()
-                label.place(x=xplace, y=yplace)
-                yplace += 230
+            if not CHAT in frame:
+                if frame.split(".")[-1] == "txt":
+                    file = open(frame, "r")
+                    data = file.read()
+                    file.close()
+                    label = Label(self.root, text=data, font=self.font1)
+                    label.pack()
+                    label.place(x=xplace, y=yplace)
+                    yplace += 70
+                else:
+                    image = Image.open(frame)
+                    image = image.resize((200, 200), Image.ANTIALIAS)
+                    photo = ImageTk.PhotoImage(image)
+                    label = Label(self.root, image=photo)
+                    label.image = photo
+                    label.pack()
+                    label.place(x=xplace, y=yplace)
+                    yplace += 230

@@ -4,6 +4,7 @@ ICON = "LegBook.ico"
 SEARCH_FRIENDS = "Search Friends"
 PRIVATE_CHAT = "Private Chat"
 GROUP_CHAT = "Group Chat"
+ADD_FRIENDS = "Add Friends"
 DOWNLOAD_MOVIE = "Download Movie"
 DOWNLOAD_YOUTUBE = "Download Youtube"
 SETTINGS = "Settings"
@@ -74,6 +75,8 @@ MY_WALL_TEXT = "These is the place where all your life is drains into.\n" \
                "Here you can upload statuses, messages and pictures\n" \
                "from your life in order to share your enjoyment with\n" \
                "all your friends."
+ADD_PAGE_TEXT = "Here you can send friendship requests to another users\n" \
+                "Friendship requests which have sent to you will appear here"
 USERNAME = "username"
 PASSWORD = "password"
 EMAIL = "email"
@@ -90,6 +93,7 @@ OK = "OK"
 NO = "NO"
 GET_FRAMES = "getframes"
 BASE64 = "base64"
+CHAT = "chat"
 CHAT_FILE = "chat.txt"
 
 TXT = "txt"
