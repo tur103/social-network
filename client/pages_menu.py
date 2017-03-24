@@ -58,3 +58,11 @@ def log_out():
 def save_username(user):
     global username
     username = user
+
+
+def get_username():
+    global username
+    try:
+        return username
+    except NameError:
+        return None
