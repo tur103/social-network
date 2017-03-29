@@ -55,17 +55,19 @@ class AddFriends(Page):
         answer = sock.recv(CHAT_BUFFER).decode()
         if answer and answer != OK:
             requests = answer.split(",")
-            requests = ["q", "w", "e", "r", "r", "a", "ds", "s", "q", "w", "e", "r", "r", "a", "ds", "s", "q", "w", "e", "r", "r", "a", "ds", "s", "q", "w", "e", "r", "r", "a", "ds", "s"]
             scroll = Scrollbar()
             scroll.pack(side="right", fill="y")
+            length = len(requests)
+            if length > 12:
+                length = 12
             lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
-                         fg=ORANGE_RED, height=12, selectbackground=GREEN,
-                         selectmode="single", relief="sunken", width=15, yscrollcommand=scroll.set)
+                         fg=ORANGE_RED, height=length, selectbackground=GREEN,
+                         selectmode="single", relief="sunken", width=20, yscrollcommand=scroll.set)
             i = 1
             for raw in requests:
                 lb.insert(i, raw)
                 i += 1
             lb.pack()
-            lb.place(y=320, x=290)
+            lb.place(y=320, x=250)
             scroll.config(command=lb.yview)
         sock.close()
