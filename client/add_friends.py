@@ -54,12 +54,15 @@ class AddFriends(Page):
         sock.send(request.encode())
         answer = sock.recv(CHAT_BUFFER).decode()
         if answer and answer != OK:
-            xplace = 380
-            yplace = 280
-            requests = answer.split("\n")
+            requests = answer.split(",")
+            lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
+                         fg=ORANGE_RED, height=len(requests), selectbackground=GREEN,
+                         selectmode="single", relief="sunken", width=15)
+            i = 1
+            print(requests)
             for raw in requests:
-                label = Label(self.root, font=self.font1, text=raw)
-                label.pack()
-                label.place(x=xplace, y=yplace)
-                yplace += 70
+                lb.insert(i, raw)
+                i += 1
+            lb.pack()
+            lb.place(y=300, x=290)
         sock.close()

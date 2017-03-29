@@ -7,6 +7,9 @@ TEXT_BUFFER = 100
 
 DATABASE_PATH = "database.db"
 FRIENDS_PATH = "c:/work/facebookframes/"
+FRIENDS_DATABASE = "/friends.db"
+REQUESTS_DATABASE = "/requests.db"
+DATABASE_END = ".db"
 
 OK = "OK"
 NO = "NO"

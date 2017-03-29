@@ -29,11 +29,35 @@ class DataBase(object):
         self.database.execute("drop table if exists requests")
 
     def get_requests(self):
-        cursor = self.database.execute("select user from friends")
+        cursor = self.database.execute("select user from requests")
         requests = []
         for raw in cursor:
             requests.append(raw[0])
         return requests
+
+    def get_friends(self):
+        cursor = self.database.execute("select user from friends")
+        friends = []
+        for raw in cursor:
+            friends.append(raw[0])
+        return friends
+
+    def delete_request(self, user):
+        requests_list = self.get_requests()
+        if user in requests_list:
+            self.database.execute("delete from requests where user = '%s'" % user)
+            self.database.commit()
+            return True
+        else:
+            return False
+
+    def add_friend(self, user):
+        self.database.execute("insert into friends (user) values ('%s')" % user)
+        self.database.commit()
+
+    def add_request(self, user):
+        self.database.execute("insert into requests (user) values ('%s')" % user)
+        self.database.commit()
 
     def add_user(self, credentials):
         username = credentials[0]

@@ -2,10 +2,13 @@ from database import *
 from smtp import *
 import socket
 import glob
-import os
 
 
 def main():
+    # db = DataBase(DATABASE_PATH)
+    # db.drop_database()
+    # db.create_database()
+    # db.close_database()
     server_socket = socket.socket()
     server_socket.bind((HOST, PORT))
     server_socket.listen(NUMBER_OF_CLIENTS)
@@ -22,10 +25,10 @@ def main():
                 match = database.add_user(credentials)
                 if match:
                     open(DIRECTORY + credentials[0] + CHAT_FILE, "w").close()
-                    friends_database = DataBase(FRIENDS_PATH + credentials[0] + "/friends.db")
+                    friends_database = DataBase(FRIENDS_PATH + credentials[0] + FRIENDS_DATABASE)
                     friends_database.create_friends_database()
                     friends_database.close_database()
-                    requests_database = DataBase(FRIENDS_PATH + credentials[0] + "/requests.db")
+                    requests_database = DataBase(FRIENDS_PATH + credentials[0] + REQUESTS_DATABASE)
                     requests_database.create_requests_database()
                     requests_database.close_database()
             elif CHANGE in client_request:
@@ -49,7 +52,7 @@ def main():
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
             client_socket.send(str(len(frames_list)).encode())
             for frame in frames_list:
-                if not CHAT in frame and not REQUEST in frame and not FRIEND in frame:
+                if not CHAT in frame and not DATABASE_END in frame:
                     name = frame.split("\\")[-1]
                     client_socket.send(name.encode())
                     file = open(frame, "rb")
@@ -107,33 +110,30 @@ def main():
         elif ADD_FRIEND in client_request:
             folder = client_request.split("#")[1]
             user = client_request.split("#")[2]
-            request_file = open(DIRECTORY + folder + REQUESTS, "r")
-            data = request_file.read()
-            if user.split("-not")[0] in data:
-                data = data.replace(user.split("-not")[0] + "\n", "")
-                request_file.close()
-                request_file = open(DIRECTORY + folder + REQUESTS, "w")
-                request_file.write(data)
-                request_file.close()
+            requests_database = DataBase(FRIENDS_PATH + folder + REQUESTS_DATABASE)
+            ans = requests_database.delete_request(user)
+            requests_database.close_database()
+            if ans:
                 if not "-not" in user:
-                    friends_file = open(DIRECTORY + folder + FRIENDS, "a")
-                    friends_file.write(user + "\n")
-                    friends_file.close()
-                    friends_file = open(DIRECTORY + user + FRIENDS, "a")
-                    friends_file.write(folder + "\n")
-                    friends_file.close()
+                    friends_database = DataBase(FRIENDS_PATH + folder + FRIENDS_DATABASE)
+                    friends_database.add_friend(user)
+                    friends_database.close_database()
+                    friends_database = DataBase(FRIENDS_PATH + user + FRIENDS_DATABASE)
+                    friends_database.add_friend(folder)
+                    friends_database.close_database()
                 match = True
             else:
                 database = DataBase(DATABASE_PATH)
                 users_list = database.get_users()
+                database.close_database()
                 if user in users_list:
-                    friend_file = open(DIRECTORY + folder + FRIENDS, "r")
-                    data = friend_file.read()
-                    friend_file.close()
-                    if user not in data:
-                        request_file = open(DIRECTORY + user + REQUESTS, "a")
-                        request_file.write(folder + "\n")
-                        request_file.close()
+                    friends_database = DataBase(FRIENDS_PATH + folder + FRIENDS_DATABASE)
+                    friends_list = friends_database.get_friends()
+                    friends_database.close_database()
+                    if user not in friends_list:
+                        requests_database = DataBase(FRIENDS_PATH + user + REQUESTS_DATABASE)
+                        requests_database.add_request(folder)
+                        requests_database.close_database()
                         match = True
                     else:
                         match = False
@@ -141,10 +141,10 @@ def main():
                     match = False
         elif GET_REQUESTS in client_request:
             folder = client_request.split("#")[1]
-            request_file = open(DIRECTORY + folder + REQUESTS)
-            data = request_file.read()
-            request_file.close()
-            client_socket.send(data.encode())
+            requests_database = DataBase(FRIENDS_PATH + folder + REQUESTS_DATABASE)
+            list_of_requests = requests_database.get_requests()
+            string_of_requests = ",".join(list_of_requests)
+            client_socket.send(string_of_requests.encode())
             match = NOT
         else:
             match = False
