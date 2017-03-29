@@ -5,6 +5,9 @@ BUFFER = 1024
 IMAGE_BUFFER = 300000
 TEXT_BUFFER = 100
 
+DATABASE_PATH = "database.db"
+FRIENDS_PATH = "c:/work/facebookframes/"
+
 OK = "OK"
 NO = "NO"
 NOT = "not"

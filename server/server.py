@@ -13,7 +13,7 @@ def main():
         (client_socket, client_address) = server_socket.accept()
         client_request = client_socket.recv(BUFFER).decode()
         if DATABASE in client_request:
-            database = DataBase()
+            database = DataBase(DATABASE_PATH)
             if LOG_IN in client_request:
                 credentials = client_request.split("#")[2:]
                 match = database.check_user(credentials)
@@ -22,10 +22,12 @@ def main():
                 match = database.add_user(credentials)
                 if match:
                     open(DIRECTORY + credentials[0] + CHAT_FILE, "w").close()
-                    if not os.path.exists(DIRECTORY + credentials[0] + FRIENDS):
-                        open(DIRECTORY + credentials[0] + FRIENDS, "w").close()
-                    if not os.path.exists(DIRECTORY + credentials[0] + REQUESTS):
-                        open(DIRECTORY + credentials[0] + REQUESTS, "w").close()
+                    friends_database = DataBase(FRIENDS_PATH + credentials[0] + "/friends.db")
+                    friends_database.create_friends_database()
+                    friends_database.close_database()
+                    requests_database = DataBase(FRIENDS_PATH + credentials[0] + "/requests.db")
+                    requests_database.create_requests_database()
+                    requests_database.close_database()
             elif CHANGE in client_request:
                 credentials = client_request.split("#")[2:]
                 database.update_user(credentials[0], credentials[1])
@@ -37,7 +39,7 @@ def main():
             smtp_server = SMTP()
             credentials = client_request.split("#")[1:]
             if len(credentials) == 3:
-                database = DataBase()
+                database = DataBase(DATABASE_PATH)
                 credentials[0] = database.get_email(credentials[2])
                 match = smtp_server.send_email(credentials[0], credentials[1], credentials[2])
             else:
@@ -72,7 +74,7 @@ def main():
             new_file.close()
             match = NOT
         elif CHANGE in client_request:
-            database = DataBase()
+            database = DataBase(DATABASE_PATH)
             if EMAIL in client_request:
                 username = client_request.split("#")[2]
                 email = client_request.split("#")[3]
@@ -83,7 +85,7 @@ def main():
                 match = database.change_password(username, password)
         elif FORGOT in client_request:
             smtp_server = SMTP()
-            database = DataBase()
+            database = DataBase(DATABASE_PATH)
             username = client_request.split("#")[1]
             email = client_request.split("#")[2]
             password = database.get_password(username, email)
@@ -122,7 +124,7 @@ def main():
                     friends_file.close()
                 match = True
             else:
-                database = DataBase()
+                database = DataBase(DATABASE_PATH)
                 users_list = database.get_users()
                 if user in users_list:
                     friend_file = open(DIRECTORY + folder + FRIENDS, "r")

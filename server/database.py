@@ -4,9 +4,9 @@ import os
 
 
 class DataBase(object):
-    def __init__(self):
+    def __init__(self, path):
         object.__init__(self)
-        self.database = sqlite3.connect("database.db")
+        self.database = sqlite3.connect(path)
 
     def create_database(self):
         self.database.execute('''create table user(username text primary key
@@ -15,6 +15,25 @@ class DataBase(object):
 
     def drop_database(self):
         self.database.execute("drop table if exists user")
+
+    def create_friends_database(self):
+        self.database.execute('''create table friends(user text primary key not null);''')
+
+    def drop_friends_database(self):
+        self.database.execute("drop table if exists friends")
+
+    def create_requests_database(self):
+        self.database.execute('''create table requests(user text primary key not null);''')
+
+    def drop_requests_database(self):
+        self.database.execute("drop table if exists requests")
+
+    def get_requests(self):
+        cursor = self.database.execute("select user from friends")
+        requests = []
+        for raw in cursor:
+            requests.append(raw[0])
+        return requests
 
     def add_user(self, credentials):
         username = credentials[0]
