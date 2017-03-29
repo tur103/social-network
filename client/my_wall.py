@@ -82,8 +82,6 @@ class MyWall(Page):
             self.add_elements(self.root, MY_WALL)
 
     def show_frames(self):
-        scrll = Scrollbar(self.root, orient="vertical")
-        scrll.pack(fill="y", side="right", expand="False")
         user_folder = getpass.getuser()
         directory = "c:/users/" + user_folder + "/downloads/facebook/*.*"
         frames_list = glob.glob(directory)
