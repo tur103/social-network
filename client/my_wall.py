@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import socket
 import time
 import os
+from tkinter import messagebox
 Image.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -14,6 +15,7 @@ class MyWall(Page):
         Page.__init__(self, root)
         self.root = root
         self.username = username
+        self.interior = None
 
     def add_elements(self, root, title):
         global entry_status
@@ -37,22 +39,27 @@ class MyWall(Page):
     def upload_picture(self):
         file_path = filedialog.askopenfilename()
         if file_path:
-            user_folder = getpass.getuser()
-            directory = "c:/users/" + user_folder + "/downloads/facebook/" + file_path.split("/")[-1]
-            chosen_file = open(file_path, "rb")
-            data = chosen_file.read()
-            chosen_file.close()
-            new_file = open(directory, "wb")
-            new_file.write(data)
-            new_file.close()
-            sock = socket.socket()
-            sock.connect((SERVER, PORT))
-            request = "uploadpicture#" + self.username + "#" + file_path.split("/")[-1]
-            sock.send(request.encode())
-            time.sleep(1)
-            sock.send(data)
-            sock.close()
-            self.show_frames()
+            if file_path[-3:].lower() in FORMATS_LIST:
+                user_folder = getpass.getuser()
+                directory = "c:/users/" + user_folder + "/downloads/facebook/" + file_path.split("/")[-1]
+                chosen_file = open(file_path, "rb")
+                data = chosen_file.read()
+                chosen_file.close()
+                new_file = open(directory, "wb")
+                new_file.write(data)
+                new_file.close()
+                sock = socket.socket()
+                sock.connect((SERVER, PORT))
+                request = "uploadpicture#" + self.username + "#" + file_path.split("/")[-1]
+                sock.send(request.encode())
+                time.sleep(1)
+                sock.send(data)
+                sock.close()
+                self.clear_screen(self.root)
+                self.add_elements(self.root, MY_WALL)
+            else:
+                messagebox.showwarning("ERROR!", "this file is not match to "
+                                       "the following formats:\nJPG, PNG")
 
     def upload_status(self):
         global entry_status
@@ -71,7 +78,8 @@ class MyWall(Page):
             sock.send(message.encode())
             sock.close()
             entry_status.delete(0, END)
-            self.show_frames()
+            self.clear_screen(self.root)
+            self.add_elements(self.root, MY_WALL)
 
     def show_frames(self):
         scrll = Scrollbar(self.root, orient="vertical")

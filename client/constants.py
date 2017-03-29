@@ -109,3 +109,5 @@ CHANGE_PASSWORD = "Change Password"
 CONFIRM_PASSWORD = "Confirm Password"
 SEND_US = "Send Us an Email"
 FORGOT_PASSWORD = "Forgot Password"
+
+FORMATS_LIST = ["jpg", "png"]
