@@ -50,7 +50,11 @@ def main():
         elif GET_FRAMES in client_request:
             folder = client_request.split("#")[1]
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
-            client_socket.send(str(len(frames_list)).encode())
+            length = 0
+            for frame in frames_list:
+                if not CHAT in frame and not DATABASE_END in frame:
+                    length += 1
+            client_socket.send(str(length).encode())
             for frame in frames_list:
                 if not CHAT in frame and not DATABASE_END in frame:
                     name = frame.split("\\")[-1]
