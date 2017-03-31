@@ -48,6 +48,12 @@ class MyWall(Page):
                 new_file = open(directory, "wb")
                 new_file.write(data)
                 new_file.close()
+                image = Image.open(directory)
+                image = image.resize((200, 200), Image.ANTIALIAS)
+                image.save(directory)
+                new_file = open(directory, "rb")
+                data = new_file.read()
+                new_file.close()
                 sock = socket.socket()
                 sock.connect((SERVER, PORT))
                 request = "uploadpicture#" + self.username + "#" + file_path.split("/")[-1]
@@ -101,7 +107,6 @@ class MyWall(Page):
                     yplace += 70
                 else:
                     image = Image.open(frame)
-                    image = image.resize((200, 200), Image.ANTIALIAS)
                     photo = ImageTk.PhotoImage(image)
                     label = Label(self.root, image=photo)
                     label.image = photo

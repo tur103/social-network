@@ -2,6 +2,7 @@ from database import *
 from smtp import *
 import socket
 import glob
+import time
 
 
 def main():
@@ -50,19 +51,19 @@ def main():
         elif GET_FRAMES in client_request:
             folder = client_request.split("#")[1]
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
-            length = 0
+            new_frames_list = []
             for frame in frames_list:
                 if not CHAT in frame and not DATABASE_END in frame:
-                    length += 1
-            client_socket.send(str(length).encode())
-            for frame in frames_list:
-                if not CHAT in frame and not DATABASE_END in frame:
-                    name = frame.split("\\")[-1]
-                    client_socket.send(name.encode())
-                    file = open(frame, "rb")
-                    data = file.read()
-                    file.close()
-                    client_socket.send(data)
+                    new_frames_list.append(frame)
+            client_socket.send(str(len(new_frames_list)).encode())
+            for frame in new_frames_list:
+                name = frame.split("\\")[-1]
+                client_socket.send(name.encode())
+                file = open(frame, "rb")
+                data = file.read()
+                file.close()
+                time.sleep(0.5)
+                client_socket.send(data)
             match = NOT
         elif UPLOAD_PICTURE in client_request:
             folder = client_request.split("#")[1] + "/"

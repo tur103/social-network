@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import getpass
 import os
+import ctypes
 
 
 class AuthPage(Page):
@@ -180,6 +181,7 @@ class AuthPage(Page):
         directory = "c:/users/" + user_folder + "/downloads/facebook"
         if not os.path.exists(directory):
             os.mkdir(directory)
+            ctypes.windll.kernel32.SetFileAttributesW(directory, 0x02)
         directory += "/"
         open(directory + CHAT_FILE, "w").close()
         self.make_socket()
