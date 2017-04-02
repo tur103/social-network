@@ -13,6 +13,7 @@ LOG_OUT = "Log Out"
 OFFLINE = "Offline"
 UPLOAD_PICTURE = "Upload Picture"
 UPLOAD_STATUS = "Upload Status"
+RECORD = "Record"
 TITLE = "Social Network"
 PAGE_SIZE = "900x800"
 MENU_SIZE = 20

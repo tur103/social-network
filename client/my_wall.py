@@ -4,6 +4,7 @@ import socket
 import time
 from tkinter import messagebox
 from scrolled_window import *
+import speech_recognition as sr
 Image.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -18,19 +19,24 @@ class MyWall(Page):
         global entry_status
         super(MyWall, self).add_elements(root, title)
         entry_status = Entry(self.root, bg=CHOCOLATE, fg=WHITE, bd=5, font=self.font1,
-                             exportselection=0, insertbackground=GOLD, insertwidth=10, width=40)
+                             exportselection=0, insertbackground=GOLD, insertwidth=10, width=35)
         entry_status.pack()
-        entry_status.place(x=10, y=80)
+        entry_status.place(x=122, y=80)
         button_status = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
                                font=self.font1, fg=WHITE, text=UPLOAD_STATUS,
                                command=self.upload_status)
         button_status.pack()
-        button_status.place(x=650, y=70)
+        button_status.place(x=660, y=70)
         button_picture = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
                                 font=self.font1, fg=WHITE, text=UPLOAD_PICTURE,
                                 command=self.upload_picture)
         button_picture.pack()
         button_picture.place(x=650, y=10)
+        button_record = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+                               font=self.font1, fg=WHITE, text=RECORD,
+                               command=self.record_status)
+        button_record.pack()
+        button_record.place(x=0, y=70)
 
     def upload_picture(self):
         file_path = filedialog.askopenfilename()
@@ -83,3 +89,21 @@ class MyWall(Page):
             entry_status.delete(0, END)
             self.clear_screen(self.root)
             self.add_elements(self.root, MY_WALL)
+
+    def record_status(self):
+        global entry_status
+        # Record Audio
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            audio = r.listen(source)
+        # Speech recognition using Google Speech Recognition
+        try:
+            # for testing purposes, we're just using the default API key
+            # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+            # instead of `r.recognize_google(audio)`
+            entry_status.delete(0, END)
+            entry_status.insert(0, r.recognize_google(audio))
+        except sr.UnknownValueError:
+            pass
+        except sr.RequestError:
+            pass
