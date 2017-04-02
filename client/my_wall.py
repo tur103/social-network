@@ -15,7 +15,6 @@ class MyWall(Page):
         Page.__init__(self, root)
         self.root = root
         self.username = username
-        self.interior = None
 
     def add_elements(self, root, title):
         global entry_status
