@@ -1,3 +1,4 @@
+import os
 HOST = "0.0.0.0"
 PORT = 8820
 NUMBER_OF_CLIENTS = 1
@@ -6,7 +7,6 @@ IMAGE_BUFFER = 3000000
 TEXT_BUFFER = 100
 
 DATABASE_PATH = "database.db"
-FRIENDS_PATH = "c:/work/facebookframes/"
 FRIENDS_DATABASE = "/friends.db"
 REQUESTS_DATABASE = "/requests.db"
 DATABASE_END = ".db"
@@ -27,7 +27,7 @@ GET_CHAT = "getchat"
 ADD_FRIEND = "addfriend"
 GET_REQUESTS = "getrequests"
 
-DIRECTORY = "C:/work/facebookframes/"
+DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/users_database"
 
 MY_EMAIL = "tur103103@gmail.com"
 MY_PASSWORD = "103103103"

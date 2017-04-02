@@ -10,6 +10,8 @@ def main():
     # db.drop_database()
     # db.create_database()
     # db.close_database()
+    if not os.path.exists(DIRECTORY):
+        os.mkdir(DIRECTORY)
     server_socket = socket.socket()
     server_socket.bind((HOST, PORT))
     server_socket.listen(NUMBER_OF_CLIENTS)
@@ -26,10 +28,10 @@ def main():
                 match = database.add_user(credentials)
                 if match:
                     open(DIRECTORY + credentials[0] + CHAT_FILE, "w").close()
-                    friends_database = DataBase(FRIENDS_PATH + credentials[0] + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + credentials[0] + FRIENDS_DATABASE)
                     friends_database.create_friends_database()
                     friends_database.close_database()
-                    requests_database = DataBase(FRIENDS_PATH + credentials[0] + REQUESTS_DATABASE)
+                    requests_database = DataBase(DIRECTORY + credentials[0] + REQUESTS_DATABASE)
                     requests_database.create_requests_database()
                     requests_database.close_database()
             elif CHANGE in client_request:
@@ -115,15 +117,15 @@ def main():
         elif ADD_FRIEND in client_request:
             folder = client_request.split("#")[1]
             user = client_request.split("#")[2]
-            requests_database = DataBase(FRIENDS_PATH + folder + REQUESTS_DATABASE)
+            requests_database = DataBase(DIRECTORY + folder + REQUESTS_DATABASE)
             ans = requests_database.delete_request(user)
             requests_database.close_database()
             if ans:
                 if not "-not" in user:
-                    friends_database = DataBase(FRIENDS_PATH + folder + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + folder + FRIENDS_DATABASE)
                     friends_database.add_friend(user)
                     friends_database.close_database()
-                    friends_database = DataBase(FRIENDS_PATH + user + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + user + FRIENDS_DATABASE)
                     friends_database.add_friend(folder)
                     friends_database.close_database()
                 match = True
@@ -132,11 +134,11 @@ def main():
                 users_list = database.get_users()
                 database.close_database()
                 if user in users_list:
-                    friends_database = DataBase(FRIENDS_PATH + folder + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + folder + FRIENDS_DATABASE)
                     friends_list = friends_database.get_friends()
                     friends_database.close_database()
                     if user not in friends_list:
-                        requests_database = DataBase(FRIENDS_PATH + user + REQUESTS_DATABASE)
+                        requests_database = DataBase(DIRECTORY + user + REQUESTS_DATABASE)
                         requests_database.add_request(folder)
                         requests_database.close_database()
                         match = True
@@ -146,7 +148,7 @@ def main():
                     match = False
         elif GET_REQUESTS in client_request:
             folder = client_request.split("#")[1]
-            requests_database = DataBase(FRIENDS_PATH + folder + REQUESTS_DATABASE)
+            requests_database = DataBase(DIRECTORY + folder + REQUESTS_DATABASE)
             list_of_requests = requests_database.get_requests()
             string_of_requests = ",".join(list_of_requests)
             client_socket.send(string_of_requests.encode())
