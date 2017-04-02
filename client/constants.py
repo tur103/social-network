@@ -18,6 +18,7 @@ PAGE_SIZE = "900x800"
 MENU_SIZE = 20
 TEXT_SIZE = 10
 TITLE_SIZE = 30
+STATUS_SIZE = 15
 BOLD = "bold"
 YELLOW = "yellow"
 BLUE = "blue"

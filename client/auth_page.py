@@ -50,7 +50,7 @@ class AuthPage(Page):
         l = Label(self.root, pady=20)
         l.pack()
         button = Button(self.root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
-                        font=self.font1, fg=WHITE, text=LOG_IN,
+                        font=self.font1, fg=WHITE, text=REGISTER,
                         command=self.register_user)
         button.pack()
 
