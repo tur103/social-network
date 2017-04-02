@@ -93,7 +93,8 @@ class MyWall(Page):
         frames_list = glob.glob(directory)
         frames_list.sort(key=os.path.getmtime)
         frames_list = frames_list[::-1]
-        xplace = 300
+        xplace_image = 300
+        xplace_status = 80
         yplace = 150
         for frame in frames_list:
             if not CHAT in frame:
@@ -101,9 +102,12 @@ class MyWall(Page):
                     file = open(frame, "r")
                     data = file.read()
                     file.close()
-                    label = Label(self.root, text=data, font=self.font1)
+                    if len(data) > 100:
+                        yplace += (len(data) // 100 + 1) * 70
+                        data = "\n".join([data[i: i + 100] for i in range(0, len(data), 100)])
+                    label = Label(self.root, text=data, font=self.font4)
                     label.pack()
-                    label.place(x=xplace, y=yplace)
+                    label.place(x=xplace_status, y=yplace)
                     yplace += 70
                 else:
                     image = Image.open(frame)
@@ -111,5 +115,5 @@ class MyWall(Page):
                     label = Label(self.root, image=photo)
                     label.image = photo
                     label.pack()
-                    label.place(x=xplace, y=yplace)
+                    label.place(x=xplace_image, y=yplace)
                     yplace += 230

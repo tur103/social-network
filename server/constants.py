@@ -27,7 +27,7 @@ GET_CHAT = "getchat"
 ADD_FRIEND = "addfriend"
 GET_REQUESTS = "getrequests"
 
-DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/users_database"
+DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/users_database/"
 
 MY_EMAIL = "tur103103@gmail.com"
 MY_PASSWORD = "103103103"
