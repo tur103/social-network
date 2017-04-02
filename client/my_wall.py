@@ -1,12 +1,9 @@
 from page import *
 from tkinter import filedialog
-import getpass
-import glob
-from PIL import Image, ImageTk
 import socket
 import time
-import os
 from tkinter import messagebox
+from scrolled_window import *
 Image.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -17,6 +14,7 @@ class MyWall(Page):
         self.username = username
 
     def add_elements(self, root, title):
+        ScrolledWindow(self.root).pack(side="bottom", fill="both", expand=True)
         global entry_status
         super(MyWall, self).add_elements(root, title)
         entry_status = Entry(self.root, bg=CHOCOLATE, fg=WHITE, bd=5, font=self.font1,
@@ -33,7 +31,6 @@ class MyWall(Page):
                                 command=self.upload_picture)
         button_picture.pack()
         button_picture.place(x=650, y=10)
-        self.show_frames()
 
     def upload_picture(self):
         file_path = filedialog.askopenfilename()
@@ -86,34 +83,3 @@ class MyWall(Page):
             entry_status.delete(0, END)
             self.clear_screen(self.root)
             self.add_elements(self.root, MY_WALL)
-
-    def show_frames(self):
-        user_folder = getpass.getuser()
-        directory = "c:/users/" + user_folder + "/downloads/facebook/*.*"
-        frames_list = glob.glob(directory)
-        frames_list.sort(key=os.path.getmtime)
-        frames_list = frames_list[::-1]
-        xplace_image = 300
-        xplace_status = 80
-        yplace = 150
-        for frame in frames_list:
-            if not CHAT in frame:
-                if frame.split(".")[-1] == "txt":
-                    file = open(frame, "r")
-                    data = file.read()
-                    file.close()
-                    if len(data) > 100:
-                        yplace += (len(data) // 100 + 1) * 70
-                        data = "\n".join([data[i: i + 100] for i in range(0, len(data), 100)])
-                    label = Label(self.root, text=data, font=self.font4)
-                    label.pack()
-                    label.place(x=xplace_status, y=yplace)
-                    yplace += 70
-                else:
-                    image = Image.open(frame)
-                    photo = ImageTk.PhotoImage(image)
-                    label = Label(self.root, image=photo)
-                    label.image = photo
-                    label.pack()
-                    label.place(x=xplace_image, y=yplace)
-                    yplace += 230

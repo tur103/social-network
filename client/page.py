@@ -12,7 +12,6 @@ class Page(object):
         self.font1 = tkFontChooser.Font(size=MENU_SIZE, weight=BOLD)
         self.font2 = tkFontChooser.Font(size=TEXT_SIZE, weight=BOLD)
         self.font3 = tkFontChooser.Font(size=TITLE_SIZE, weight=BOLD)
-        self.font4 = tkFontChooser.Font(size=STATUS_SIZE)
 
     def set_menu_button(self, root):
         menubutton = Menubutton(root, activebackground=MAGENTA,

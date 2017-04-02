@@ -45,7 +45,7 @@ REGISTER = "Register"
 CONTACT_US = "Contact Us"
 LEFTT = 0
 LOG_IN_TEXT = "Hello dear user\nYou are welcome to get into the software\nand" \
-              "get connecting to all your staff and friends.\nTo log in enter" \
+              " get connecting to all your staff and friends.\nTo log in enter" \
               "your username and password"
 REGISTER_TEXT = "Hello dear user\n If you are new with this software\nyou can " \
                 "easily register by few steps\nand get into an amazing media " \
