@@ -71,9 +71,10 @@ class MyWall(Page):
         global entry_status
         message = entry_status.get()
         if message:
-            request = "uploadstatus#" + self.username + "#" + message[0] + message[-1]
+            name = "status-" + message.split(" ")[0] + message.split(" ")[-1]
+            request = "uploadstatus#" + self.username + "#" + name
             user_folder = getpass.getuser()
-            directory = "c:/users/" + user_folder + "/downloads/facebook/" + message[0] + message[-1] + ".txt"
+            directory = "c:/users/" + user_folder + "/downloads/facebook/" + name + ".txt"
             new_file = open(directory, "w")
             new_file.write(message)
             new_file.close()
