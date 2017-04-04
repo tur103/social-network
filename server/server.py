@@ -63,7 +63,7 @@ def main():
             for frame in new_frames_list:
                 name = frame.split("\\")[-1]
                 client_socket.send(name.encode())
-                check = client_socket.recv(CHECK_BUFFER)
+                check = client_socket.recv(CHECK_BUFFER).decode()
                 if check == OK:
                     file = open(frame, "rb")
                     data = file.read()
