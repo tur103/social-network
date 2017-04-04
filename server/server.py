@@ -118,12 +118,13 @@ def main():
             match = NOT
         elif ADD_FRIEND in client_request:
             folder = client_request.split("#")[1]
-            user = client_request.split("#")[2]
+            init_user = client_request.split("#")[2]
+            user = init_user.split("-not")[0]
             requests_database = DataBase(DIRECTORY + folder + REQUESTS_DATABASE)
             ans = requests_database.delete_request(user)
             requests_database.close_database()
             if ans:
-                if not "-not" in user:
+                if not "-not" in init_user:
                     friends_database = DataBase(DIRECTORY + folder + FRIENDS_DATABASE)
                     friends_database.add_friend(user)
                     friends_database.close_database()
@@ -154,6 +155,17 @@ def main():
             list_of_requests = requests_database.get_requests()
             string_of_requests = ",".join(list_of_requests)
             client_socket.send(string_of_requests.encode())
+            match = NOT
+        elif GET_FRIENDS in client_request:
+            user = client_request.split("#")[1]
+            friends_database = DataBase(DIRECTORY + user + FRIENDS_DATABASE)
+            list_of_friends = friends_database.get_friends()
+            if list_of_friends:
+                str_friends = ",".join(list_of_friends)
+                client_socket.send(str_friends.encode())
+            else:
+                client_socket.send(NO.encode())
+            friends_database.close_database()
             match = NOT
         else:
             match = False

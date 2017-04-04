@@ -52,7 +52,7 @@ class AddFriends(Page):
         sock.connect((SERVER, PORT))
         request = "getrequests#" + self.username
         sock.send(request.encode())
-        answer = sock.recv(CHAT_BUFFER).decode()
+        answer = sock.recv(FRIENDS_BUFFER).decode()
         if answer and answer != OK:
             requests = answer.split(",")
             scroll = Scrollbar()

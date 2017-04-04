@@ -4,6 +4,7 @@ from settings_page import *
 from add_friends import *
 import socket
 import auth_page
+from search_friends import *
 
 
 def add_menu(root, menubutton):
@@ -11,7 +12,7 @@ def add_menu(root, menubutton):
         global_root = root
         menubutton.menu.add_command(label=HOME_PAGE, command=home_page)
         menubutton.menu.add_command(label=MY_WALL, command=my_wall)
-        menubutton.menu.add_command(label=SEARCH_FRIENDS, command=home_page)
+        menubutton.menu.add_command(label=SEARCH_FRIENDS, command=search_friends)
         menubutton.menu.add_command(label=PRIVATE_CHAT, command=home_page)
         menubutton.menu.add_command(label=ADD_FRIENDS, command=add_friends)
         menubutton.menu.add_command(label=SETTINGS, command=settings_page)
@@ -31,6 +32,12 @@ def my_wall():
     wall = MyWall(global_root, username)
     wall.clear_screen(global_root)
     wall.add_elements(global_root, MY_WALL)
+
+
+def search_friends():
+    search = SearchFriends(global_root, username)
+    search.clear_screen(global_root)
+    search.add_elements(global_root, SEARCH_FRIENDS)
 
 
 def add_friends():

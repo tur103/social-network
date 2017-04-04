@@ -29,6 +29,7 @@ UPLOAD_STATUS = "uploadstatus"
 GET_CHAT = "getchat"
 ADD_FRIEND = "addfriend"
 GET_REQUESTS = "getrequests"
+GET_FRIENDS = "getfriends"
 
 DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/users_database/"
 

@@ -42,6 +42,7 @@ MENU_BUTTON = "menubutton"
 LOG_IN = "Log In"
 REGISTER = "Register"
 CONTACT_US = "Contact Us"
+SHOW_WALL = "Show Wall"
 LEFTT = 0
 LOG_IN_TEXT = "Hello dear user\nYou are welcome to get into the software\nand" \
               " get connecting to all your staff and friends.\nTo log in enter" \
@@ -65,13 +66,12 @@ HOME_PAGE_TEXT2 = "#My Wall -> Here you can upload and share your feelings,\n" \
                   "  from all over the world have shared.\n" \
                   "#Private Chat -> Here you can chat by messages\n" \
                   "  with your friends privately.\n" \
-                  "#Group Chat -> Here you can send your messages to\n" \
-                  "  all the online users publicly.\n" \
-                  "#Download Movie -> Here you can receive a list of\n" \
-                  "  all the movies which are current available on the " \
-                  "server.\n  Just pic one and enjoy the watching.\n" \
-                  "#Download Youtube -> Here you can easily convert\n" \
-                  "  an youtube video into a MP4 video and watch it."
+                  "#Add Friends -> Here you can send friendship requests\n" \
+                  "  or accept/reject other users requests.\n" \
+                  "#Settings -> Here you can change your info.\n" \
+                  "  Change mail address, change password or send us email.\n" \
+                  "#Offline -> You can set yourself as offline and avoid\n" \
+                  "  the server to send you updates from another users."
 MY_WALL_TEXT = "These is the place where all your life is drains into.\n" \
                "Here you can upload statuses, messages and pictures\n" \
                "from your life in order to share your enjoyment with\n" \
@@ -80,6 +80,9 @@ ADD_PAGE_TEXT = "Here you can send friendship requests to another users\n" \
                 "Friendship requests which have sent to you will appear here\n" \
                 "To accept request type its username and click the button\n" \
                 "To decline request type its username + '-not' at the end"
+SEARCH_FRIENDS_TEXT = "Here you can find what other people from all\n" \
+                      "over the world have shared Pick a user\n" \
+                      "from your friends list and watch his wall"
 USERNAME = "username"
 PASSWORD = "password"
 EMAIL = "email"
@@ -91,13 +94,14 @@ PORT = 8820
 CHECK_BUFFER = 2
 NAME_BUFFER = 200
 CHAT_BUFFER = 500
+FRIENDS_BUFFER = 2000
 WALL_BUFFER = 3000000
 OK = "OK"
 NON = "NO"
 GET_FRAMES = "getframes"
 BASE64 = "base64"
 CHAT = "chat"
-CHAT_FILE = "chat.txt"
+CHAT_DATABASE = "chat.db"
 REQUEST = "request"
 FRIENDS = "friends"
 REQUESTS = "requests.txt"
