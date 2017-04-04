@@ -42,8 +42,7 @@ class MyWall(Page):
         file_path = filedialog.askopenfilename()
         if file_path:
             if file_path[-3:].lower() in FORMATS_LIST:
-                user_folder = getpass.getuser()
-                directory = "c:/users/" + user_folder + "/downloads/facebook/" + file_path.split("/")[-1]
+                directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + file_path.split("/")[-1]
                 chosen_file = open(file_path, "rb")
                 data = chosen_file.read()
                 chosen_file.close()
@@ -75,8 +74,7 @@ class MyWall(Page):
         if message:
             name = "status-" + message.split(" ")[0] + message.split(" ")[-1]
             request = "uploadstatus#" + self.username + "#" + name
-            user_folder = getpass.getuser()
-            directory = "c:/users/" + user_folder + "/downloads/facebook/" + name + ".txt"
+            directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + name + ".txt"
             new_file = open(directory, "w")
             new_file.write(message)
             new_file.close()
@@ -104,6 +102,6 @@ class MyWall(Page):
             entry_status.delete(0, END)
             entry_status.insert(0, r.recognize_google(audio))
         except sr.UnknownValueError:
-            pass
-        except sr.RequestError:
-            pass
+            messagebox.showwarning("Failed", "sorry, what you where saying?\nI didn't realize it. try again")
+        except sr.RequestError as e:
+            messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))

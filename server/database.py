@@ -28,6 +28,31 @@ class DataBase(object):
     def drop_requests_database(self):
         self.database.execute("drop table if exists requests")
 
+    def create_chat_database(self):
+        self.database.execute('''create table chat(too text primary key not null,
+                              frm text not null, message text not null);''')
+
+    def drop_chat_database(self):
+        self.database.execute("drop table if exists chat")
+
+    def add_message(self, to, frm, message):
+        self.database.execute("insert into chat (too, frm, message) "
+                              "values ('%s', '%s', '%s')" % (to, frm, message))
+        self.database.commit()
+
+    def get_message(self, to):
+        cursor = self.database.execute("select too, frm, message from chat")
+        messages_list = []
+        for row in cursor:
+            if row[0] == to:
+                messages_list.append((row[0], row[1], row[2]))
+        try:
+            self.database.execute("delete from chat where too = '%s'" % to)
+            self.database.commit()
+        except sqlite3.IntegrityError:
+            pass
+        return messages_list
+
     def get_requests(self):
         cursor = self.database.execute("select user from requests")
         requests = []

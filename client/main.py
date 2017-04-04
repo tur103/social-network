@@ -1,6 +1,7 @@
 from app import *
 from constants import *
 import time
+from database import *
 
 
 def main():
@@ -9,8 +10,7 @@ def main():
 
 
 def chat_receive():
-    user_folder = getpass.getuser()
-    directory = "c:/users/" + user_folder + "/downloads/facebook/chat.txt"
+    directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db"
     while True:
         if threading.active_count() == 2:
             if get_username():
@@ -20,10 +20,12 @@ def chat_receive():
                 request = "getchat#" + username
                 my_socket.send(request.encode())
                 answer = my_socket.recv(CHAT_BUFFER).decode()
-                if answer != NO:
-                    my_file = open(directory, "a")
-                    my_file.write(answer)
-                    my_file.close()
+                if answer != NON:
+                    answer = eval(answer)
+                    chat_database = DataBase(directory)
+                    for row in answer:
+                        chat_database.add_message(row[0], row[1], row[2])
+                    chat_database.close_database()
                 my_socket.close()
             time.sleep(5)
         else:

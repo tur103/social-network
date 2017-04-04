@@ -28,8 +28,7 @@ class ScrolledWindow(tk.Frame):
         self.show_wall()
 
     def show_wall(self):
-        user_folder = getpass.getuser()
-        directory = "c:/users/" + user_folder + "/downloads/facebook/*.*"
+        directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/*.*"
         frames_list = glob.glob(directory)
         frames_list.sort(key=os.path.getmtime)
         frames_list = frames_list[::-1]

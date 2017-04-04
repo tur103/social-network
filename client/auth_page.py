@@ -1,7 +1,6 @@
 from pages_menu import *
 from tkinter import *
 from tkinter import messagebox
-import getpass
 import os
 import ctypes
 
@@ -177,13 +176,11 @@ class AuthPage(Page):
         home_page()
 
     def get_frames(self, username):
-        user_folder = getpass.getuser()
-        directory = "c:/users/" + user_folder + "/downloads/facebook"
+        directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook"
         if not os.path.exists(directory):
             os.mkdir(directory)
             ctypes.windll.kernel32.SetFileAttributesW(directory, 0x02)
         directory += "/"
-        open(directory + CHAT_FILE, "w").close()
         self.make_socket()
         request = GET_FRAMES + "#" + username
         self.socket.send(request.encode())
@@ -192,12 +189,14 @@ class AuthPage(Page):
             frames = int(frames)
             for frame in range(frames):
                 name = self.socket.recv(NAME_BUFFER).decode()
-                data = self.socket.recv(WALL_BUFFER)
-                if name != OK:
-                    if not os.path.exists(directory + name):
-                        new_file = open(directory + name, "wb")
-                        new_file.write(data)
-                        new_file.close()
+                if name != OK and not os.path.exists(directory + name):
+                    self.socket.send(OK.encode())
+                    data = self.socket.recv(WALL_BUFFER)
+                    new_file = open(directory + name, "wb")
+                    new_file.write(data)
+                    new_file.close()
+                else:
+                    self.socket.send(NON.encode())
         except ValueError:
             #The user didn't update media yet
             pass

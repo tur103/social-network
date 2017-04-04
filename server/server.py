@@ -27,7 +27,9 @@ def main():
                 credentials = client_request.split("#")[2:]
                 match = database.add_user(credentials)
                 if match:
-                    open(DIRECTORY + credentials[0] + CHAT_FILE, "w").close()
+                    chat_database = DataBase(DIRECTORY + credentials[0] + CHAT_DATABASE)
+                    chat_database.create_chat_database()
+                    chat_database.close_database()
                     friends_database = DataBase(DIRECTORY + credentials[0] + FRIENDS_DATABASE)
                     friends_database.create_friends_database()
                     friends_database.close_database()
@@ -55,17 +57,19 @@ def main():
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
             new_frames_list = []
             for frame in frames_list:
-                if not CHAT in frame and not DATABASE_END in frame:
+                if not FRIENDS_END in frame and not REQUESTS_END in frame:
                     new_frames_list.append(frame)
             client_socket.send(str(len(new_frames_list)).encode())
             for frame in new_frames_list:
                 name = frame.split("\\")[-1]
                 client_socket.send(name.encode())
-                file = open(frame, "rb")
-                data = file.read()
-                file.close()
-                time.sleep(0.5)
-                client_socket.send(data)
+                check = client_socket.recv(CHECK_BUFFER)
+                if check == OK:
+                    file = open(frame, "rb")
+                    data = file.read()
+                    file.close()
+                    time.sleep(0.5)
+                    client_socket.send(data)
             match = NOT
         elif UPLOAD_PICTURE in client_request:
             folder = client_request.split("#")[1] + "/"
@@ -105,14 +109,12 @@ def main():
                 match = False
         elif GET_CHAT in client_request:
             user = client_request.split("#")[1]
-            my_file = open(DIRECTORY + user + CHAT_FILE, "r")
-            data = my_file.read()
-            if data:
-                client_socket.send(data.encode())
+            chat_database = DataBase(DIRECTORY + user + CHAT_DATABASE)
+            message_list = chat_database.get_message(user)
+            if message_list:
+                client_socket.send(repr(message_list).encode())
             else:
                 client_socket.send(NO.encode())
-            my_file.close()
-            open(DIRECTORY + user + CHAT_FILE, "w").close()
             match = NOT
         elif ADD_FRIEND in client_request:
             folder = client_request.split("#")[1]

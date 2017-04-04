@@ -5,11 +5,14 @@ NUMBER_OF_CLIENTS = 1
 BUFFER = 1024
 IMAGE_BUFFER = 3000000
 TEXT_BUFFER = 100
+CHECK_BUFFER = 2
 
 DATABASE_PATH = "database.db"
 FRIENDS_DATABASE = "/friends.db"
 REQUESTS_DATABASE = "/requests.db"
-DATABASE_END = ".db"
+CHAT_DATABASE = "/chat.db"
+FRIENDS_END = "friends.db"
+REQUESTS_END = "requests.db"
 
 OK = "OK"
 NO = "NO"
