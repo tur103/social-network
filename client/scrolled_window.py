@@ -8,7 +8,7 @@ from PIL import Image, ImageTk
 
 
 class ScrolledWindow(tk.Frame):
-    def __init__(self, root):
+    def __init__(self, root, dirr=None):
 
         tk.Frame.__init__(self, root)
         self.font4 = tkFontChooser.Font(size=STATUS_SIZE)
@@ -25,10 +25,13 @@ class ScrolledWindow(tk.Frame):
 
         self.frame.bind("<Configure>", self.onFrameConfigure)
 
-        self.show_wall()
+        self.show_wall(dirr)
 
-    def show_wall(self):
-        directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/*.*"
+    def show_wall(self, dirr):
+        if dirr:
+            directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + dirr + "/*.*"
+        else:
+            directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/*.*"
         frames_list = glob.glob(directory)
         frames_list.sort(key=os.path.getmtime)
         frames_list = frames_list[::-1]

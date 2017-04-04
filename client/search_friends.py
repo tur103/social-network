@@ -1,6 +1,6 @@
 from page import *
 import socket
-import os
+from scrolled_window import *
 
 
 class SearchFriends(Page):
@@ -53,6 +53,7 @@ class SearchFriends(Page):
         if index:
             selected_user = lb.get(index)
             self.get_frames(selected_user)
+            ScrolledWindow(self.root, selected_user).pack(side="bottom", fill="both", expand=True)
 
     def get_frames(self, username):
         directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + username
