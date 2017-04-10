@@ -6,6 +6,10 @@ import time
 
 
 def main():
+    # db = DataBase(SERVER_CHAT)
+    # db.drop_chat_database()
+    # db.create_chat_database()
+    # db.close_database()
     # db = DataBase(DATABASE_PATH)
     # db.drop_database()
     # db.create_database()
@@ -109,7 +113,7 @@ def main():
                 match = False
         elif GET_CHAT in client_request:
             user = client_request.split("#")[1]
-            chat_database = DataBase(DIRECTORY + user + CHAT_DATABASE)
+            chat_database = DataBase(SERVER_CHAT)
             message_list = chat_database.get_message(user)
             if message_list:
                 client_socket.send(repr(message_list).encode())

@@ -118,5 +118,6 @@ SEND_US = "Send Us an Email"
 FORGOT_PASSWORD = "Forgot Password"
 
 OPEN_CHAT = "Open Chat"
+SEND = "Send"
 
 FORMATS_LIST = ["jpg", "png"]

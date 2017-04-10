@@ -105,6 +105,6 @@ class MyWall(Page):
             entry_status.delete(0, END)
             entry_status.insert(0, r.recognize_google(audio))
         except sr.UnknownValueError:
-            messagebox.showwarning("Failed", "sorry, what you where saying?\nI didn't realize it. try again")
+            messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
         except sr.RequestError as e:
             messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))

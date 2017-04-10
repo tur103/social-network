@@ -8,6 +8,7 @@ TEXT_BUFFER = 100
 CHECK_BUFFER = 2
 
 DATABASE_PATH = "database.db"
+SERVER_CHAT = "chat.db"
 FRIENDS_DATABASE = "/friends.db"
 REQUESTS_DATABASE = "/requests.db"
 CHAT_DATABASE = "/chat.db"
