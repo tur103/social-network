@@ -83,6 +83,9 @@ ADD_PAGE_TEXT = "Here you can send friendship requests to another users\n" \
 SEARCH_FRIENDS_TEXT = "Here you can find what other people from all\n" \
                       "over the world have shared Pick a user\n" \
                       "from your friends list and watch his wall"
+PRIVATE_CHAT_TEXT = "Welcome to the chat! Take a look at your friends list.\n" \
+                    "Pick a friend you haven't talked with for a long time\n" \
+                    "and start the chat. Let's reconnect hour social communication!"
 USERNAME = "username"
 PASSWORD = "password"
 EMAIL = "email"
@@ -113,5 +116,7 @@ CHANGE_PASSWORD = "Change Password"
 CONFIRM_PASSWORD = "Confirm Password"
 SEND_US = "Send Us an Email"
 FORGOT_PASSWORD = "Forgot Password"
+
+OPEN_CHAT = "Open Chat"
 
 FORMATS_LIST = ["jpg", "png"]
