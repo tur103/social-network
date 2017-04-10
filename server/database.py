@@ -10,7 +10,7 @@ class DataBase(object):
 
     def create_database(self):
         self.database.execute('''create table user(username text primary key
-                              not null, password text not null, email text not
+                              not null, password text unique not null, email text unique not
                               null, online int not null);''')
 
     def drop_database(self):
