@@ -169,6 +169,7 @@ class AuthPage(Page):
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
     def enter(self, username):
+        set_online(1)
         self.get_frames(username)
         self.clear_all_screen(self.root)
         menubutton = super(AuthPage, self).set_menu_button(self.root)

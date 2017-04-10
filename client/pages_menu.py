@@ -45,6 +45,7 @@ def private_chat():
     chat.clear_screen(global_root)
     chat.add_elements(global_root, PRIVATE_CHAT)
 
+
 def add_friends():
     add = AddFriends(global_root, username)
     add.clear_screen(global_root)
@@ -67,12 +68,18 @@ def offline(value=None):
         request = "database#change#" + username + "#change"
     sock.send(request.encode())
     sock.close()
+    on = get_online()
+    if on:
+        set_online(0)
+    else:
+        set_online(1)
 
 
 def log_out():
     offline(0)
     global username
     username = None
+    set_online(0)
     auth = auth_page.AuthPage(global_root)
     menubutton_auth = auth.set_menu_button(global_root)
     menubutton_auth.pack()
@@ -88,5 +95,18 @@ def get_username():
     global username
     try:
         return username
+    except NameError:
+        return None
+
+
+def set_online(state):
+    global online
+    online = state
+
+
+def get_online():
+    global online
+    try:
+        return online
     except NameError:
         return None

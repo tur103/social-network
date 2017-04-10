@@ -13,7 +13,7 @@ def chat_receive():
     directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db"
     while True:
         if threading.active_count() == 2:
-            if get_username():
+            if get_username() and get_online():
                 username = get_username()
                 my_socket = socket.socket()
                 my_socket.connect((SERVER, PORT))
