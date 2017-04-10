@@ -31,6 +31,7 @@ GET_CHAT = "getchat"
 ADD_FRIEND = "addfriend"
 GET_REQUESTS = "getrequests"
 GET_FRIENDS = "getfriends"
+SEND_MESSAGE = "sendmessage"
 
 DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/users_database/"
 

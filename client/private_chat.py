@@ -11,6 +11,7 @@ class PrivateChat(Page):
         Page.__init__(self, root)
         self.root = root
         self.username = username
+        self.selected_user = None
 
     def add_elements(self, root, title):
         super(PrivateChat, self).add_elements(root, title)
@@ -54,11 +55,12 @@ class PrivateChat(Page):
         global lb
         index = lb.curselection()
         if index:
-            selected_user = lb.get(index)
+            self.selected_user = lb.get(index)
             self.clear_screen(self.root)
-            super(PrivateChat, self).add_elements(self.root, selected_user)
+            super(PrivateChat, self).add_elements(self.root, self.selected_user)
             scroll = Scrollbar()
             scroll.pack(side="right", fill="y")
+            global chat_box
             chat_box = Text(self.root, bg=PEACHPUFF2, bd=5, font=self.font4,
                             fg=BLACK, exportselection=0, height=26,
                             insertbackground=CYAN3, insertwidth=3, insertofftime=0,
@@ -85,14 +87,13 @@ class PrivateChat(Page):
             chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
             message_list = chat_database.get_message()
             for message in message_list:
-                if message[0] == self.username or message[0] == selected_user:
+                if message[0] == self.username or message[0] == self.selected_user:
                     if message[0] == self.username:
                         sender = "me:  "
                     else:
-                        sender = selected_user + ":  "
-                    chat_box.insert(END, sender + message[1])
+                        sender = self.selected_user + ":  "
+                    chat_box.insert(END, sender + message[1] + "\n")
             chat_box.see(END)
-
 
     def record_message(self):
         global message_entry
@@ -114,4 +115,20 @@ class PrivateChat(Page):
 
     def send_message(self):
         global message_entry
-
+        message = message_entry.get()
+        if message:
+            request = "sendmessage#" + self.selected_user + "#" + self.username + "#" + message
+            sock = socket.socket()
+            sock.connect((SERVER, PORT))
+            sock.send(request.encode())
+            answer = sock.recv(CHECK_BUFFER).decode()
+            if answer != OK:
+                messagebox.showwarning("Failed", "Your message wasn't sent.\nTry again later.")
+            else:
+                chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+                chat_database.add_message(self.selected_user, self.username, message)
+                chat_database.close_database()
+                global chat_box
+                sender = "me:  "
+                chat_box.insert(END, sender + message + "\n")
+                message_entry.delete(0, END)

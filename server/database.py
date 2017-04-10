@@ -29,7 +29,7 @@ class DataBase(object):
         self.database.execute("drop table if exists requests")
 
     def create_chat_database(self):
-        self.database.execute('''create table chat(too text primary key not null,
+        self.database.execute('''create table chat(too text not null,
                               frm text not null, message text not null);''')
 
     def drop_chat_database(self):

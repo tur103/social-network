@@ -120,6 +120,20 @@ def main():
             else:
                 client_socket.send(NO.encode())
             match = NOT
+        elif SEND_MESSAGE in client_request:
+            too = client_request.split("#")[1]
+            frm = client_request.split("#")[2]
+            message = client_request.split("#")[3]
+            chat_database = DataBase(SERVER_CHAT)
+            chat_database.add_message(too, frm, message)
+            chat_database.close_database()
+            too_database = DataBase(DIRECTORY + too + CHAT_DATABASE)
+            too_database.add_message(too, frm, message)
+            too_database.close_database()
+            frm_database = DataBase(DIRECTORY + frm + CHAT_DATABASE)
+            frm_database.add_message(too, frm, message)
+            frm_database.close_database()
+            match = True
         elif ADD_FRIEND in client_request:
             folder = client_request.split("#")[1]
             init_user = client_request.split("#")[2]
