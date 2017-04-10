@@ -5,6 +5,7 @@ import time
 from tkinter import messagebox
 from scrolled_window import *
 import speech_recognition as sr
+import glob
 Image.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -72,7 +73,9 @@ class MyWall(Page):
         global entry_status
         message = entry_status.get()
         if message:
-            name = "status-" + message.split(" ")[0] + message.split(" ")[-1]
+            list_of_files = glob.glob(os.path.dirname(os.path.realpath(__file__)) + "/facebook/*.txt")
+            number_of_files = len(list_of_files)
+            name = "status-" + str(number_of_files + 1)
             request = "uploadstatus#" + self.username + "#" + name
             directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + name + ".txt"
             new_file = open(directory, "w")
