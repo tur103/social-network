@@ -2,6 +2,8 @@ from page import *
 import socket
 import speech_recognition as sr
 from tkinter import messagebox
+from database import *
+import os
 
 
 class PrivateChat(Page):
@@ -74,12 +76,23 @@ class PrivateChat(Page):
                                    font=self.font1, fg=WHITE, text=RECORD,
                                    command=self.record_message)
             button_record.pack()
-            button_record.place(x=10, y=720)
+            button_record.place(x=20, y=713)
             button_send = Button(self.root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
                                  font=self.font1, fg=WHITE, text=SEND,
                                  command=self.send_message)
-            button_record.pack()
-            button_record.place(x=10, y=720)
+            button_send.pack()
+            button_send.place(x=750, y=713)
+            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+            message_list = chat_database.get_message()
+            for message in message_list:
+                if message[0] == self.username or message[0] == selected_user:
+                    if message[0] == self.username:
+                        sender = "me:  "
+                    else:
+                        sender = selected_user + ":  "
+                    chat_box.insert(END, sender + message[1])
+            chat_box.see(END)
+
 
     def record_message(self):
         global message_entry
@@ -100,4 +113,5 @@ class PrivateChat(Page):
             messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
 
     def send_message(self):
-        pass
+        global message_entry
+

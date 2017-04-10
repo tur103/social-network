@@ -18,5 +18,12 @@ class DataBase(object):
                               "values ('%s', '%s', '%s')" % (to, frm, message))
         self.database.commit()
 
+    def get_message(self):
+        cursor = self.database.execute("select frm, message from chat")
+        messages_list = []
+        for row in cursor:
+            messages_list.append((row[0], row[1]))
+        return messages_list
+
     def close_database(self):
         self.database.close()
