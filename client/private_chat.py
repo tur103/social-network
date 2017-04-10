@@ -36,13 +36,19 @@ class PrivateChat(Page):
             global lb
             lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
                          fg=ORANGE_RED, height=length, selectbackground=CHOCOLATE,
-                         selectmode="single", relief="sunken", width=20, yscrollcommand=scroll.set)
+                         selectmode="single", relief="sunken", width=25, yscrollcommand=scroll.set)
             i = 1
+            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+            new_senders = chat_database.new_senders()
+            chat_database.close_database()
             for raw in friends:
-                lb.insert(i, raw)
+                new_message = ""
+                if raw in new_senders:
+                    new_message = "  $unread$"
+                lb.insert(i, raw + new_message)
                 i += 1
             lb.pack()
-            lb.place(y=300, x=250)
+            lb.place(y=300, x=230)
             scroll.config(command=lb.yview)
             button_wall = Button(self.root, bg=GOLD, activebackground=GOLD,
                                  font=self.font1, fg=RED, text=OPEN_CHAT,
@@ -56,6 +62,7 @@ class PrivateChat(Page):
         index = lb.curselection()
         if index:
             self.selected_user = lb.get(index)
+            self.selected_user = self.selected_user.replace("  $unread$", "")
             self.clear_screen(self.root)
             super(PrivateChat, self).add_elements(self.root, self.selected_user)
             scroll = Scrollbar()
@@ -87,13 +94,16 @@ class PrivateChat(Page):
             chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
             message_list = chat_database.get_message()
             for message in message_list:
-                if message[0] == self.username or message[0] == self.selected_user:
+                if message[1] != "###new_message###" and \
+                        (message[0] == self.username or message[0] == self.selected_user):
                     if message[0] == self.username:
                         sender = "me:  "
                     else:
                         sender = self.selected_user + ":  "
                     chat_box.insert(END, sender + message[1] + "\n")
             chat_box.see(END)
+            chat_database.delete_new_senders(self.selected_user)
+            chat_database.close_database()
 
     def record_message(self):
         global message_entry

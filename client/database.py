@@ -25,5 +25,21 @@ class DataBase(object):
             messages_list.append((row[0], row[1]))
         return messages_list
 
+    def new_senders(self):
+        cursor = self.database.execute("select frm, message from chat")
+        senders_list = []
+        for row in cursor:
+            if row[1] == "###new_message###":
+                senders_list.append(row[0])
+        return senders_list
+
+    def delete_new_senders(self, user):
+        try:
+            self.database.execute("delete from chat where message = '###new_message###' "
+                                  "and frm = '%s'" % user)
+            self.database.commit()
+        except sqlite3.IntegrityError:
+            pass
+
     def close_database(self):
         self.database.close()
