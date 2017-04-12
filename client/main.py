@@ -27,12 +27,14 @@ def chat_receive():
                     for row in answer:
                         chat_database.add_message(row[0], row[1], row[2])
                         senders_list.append(row[1])
+                        if row[1] == PrivateChat.in_chat_with:
+                            PrivateChat.received_message(row[1], row[2])
                     senders_list = set(senders_list)
                     for sender in senders_list:
                         chat_database.add_message(username, sender, "###new_message###")
                     chat_database.close_database()
                 my_socket.close()
-            time.sleep(5)
+            time.sleep(2)
         else:
             break
 

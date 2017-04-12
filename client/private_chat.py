@@ -7,6 +7,9 @@ import os
 
 
 class PrivateChat(Page):
+
+    in_chat_with = False
+
     def __init__(self, root, username):
         Page.__init__(self, root)
         self.root = root
@@ -63,6 +66,7 @@ class PrivateChat(Page):
         if index:
             self.selected_user = lb.get(index)
             self.selected_user = self.selected_user.replace("  $unread$", "")
+            PrivateChat.in_chat_with = self.selected_user
             self.clear_screen(self.root)
             super(PrivateChat, self).add_elements(self.root, self.selected_user)
             scroll = Scrollbar()
@@ -142,3 +146,8 @@ class PrivateChat(Page):
                 sender = "me:  "
                 chat_box.insert(END, sender + message + "\n")
                 message_entry.delete(0, END)
+
+    @staticmethod
+    def received_message(frm, message):
+        sender = frm + ": "
+        chat_box.insert(END, sender + message + "\n")
