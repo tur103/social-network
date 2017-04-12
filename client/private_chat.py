@@ -146,8 +146,10 @@ class PrivateChat(Page):
                 sender = "me:  "
                 chat_box.insert(END, sender + message + "\n")
                 message_entry.delete(0, END)
+                chat_box.see(END)
 
     @staticmethod
     def received_message(frm, message):
         sender = frm + ": "
         chat_box.insert(END, sender + message + "\n")
+        chat_box.see(END)
