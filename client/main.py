@@ -7,6 +7,8 @@ from database import *
 def main():
     app = App()
     chat_receive()
+    if get_online():
+        offline(0)
 
 
 def chat_receive():

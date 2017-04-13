@@ -118,7 +118,7 @@ class DataBase(object):
         password = credentials[1]
         cursor = self.database.execute("select username, password from user")
         for raw in cursor:
-            if raw[0] == username:
+            if raw[0] == username and not self.check_online(username):
                 if raw[1] == password:
                     self.update_user(username, 1)
                     return True
