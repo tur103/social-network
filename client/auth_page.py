@@ -164,7 +164,7 @@ class AuthPage(Page):
                 self.forgot_password_page()
                 messagebox.showwarning("SUCCESS!", "Your password was sent to your email successfully")
             else:
-                messagebox.showwarning("INVALID", "Invalid username, or email")
+                messagebox.showwarning("INVALID", "Invalid username or email")
         else:
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
@@ -206,7 +206,7 @@ class AuthPage(Page):
     def email_user(self):
         global entry_address
         global entry_message
-        if entry_address.get() and entry_message.get("1.0", END):
+        if entry_address.get() and entry_message.get("1.0", END + "-1c"):
             request = "contact#" + entry_address.get() + "#" + entry_message.get("1.0", END)
             self.make_socket()
             self.socket.send(request.encode())

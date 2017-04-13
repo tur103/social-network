@@ -68,8 +68,7 @@ class SettingsPage(Page):
                 self.add_elements(self.root, SETTINGS_PAGE)
                 messagebox.showwarning("Changed!", "Your email was changed successfully")
             else:
-                messagebox.showwarning("Error", "Your email was not changed\n"
-                                       "Try again later")
+                messagebox.showwarning("Error", "This email is already in use!")
         else:
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
@@ -89,8 +88,7 @@ class SettingsPage(Page):
                     self.add_elements(self.root, SETTINGS_PAGE)
                     messagebox.showwarning("Changed!", "Your password was changed successfully")
                 else:
-                    messagebox.showwarning("Error", "Your password was not changed\n"
-                                           "Try again later")
+                    messagebox.showwarning("Error", "This password is already in use!")
             else:
                 messagebox.showwarning("Invalid", "The two passwords are not identical")
         else:
@@ -98,7 +96,7 @@ class SettingsPage(Page):
 
     def send_email(self):
         global entry_message
-        if entry_message.get("1.0", END):
+        if entry_message.get("1.0", END + "-1c"):
             request = "contact#user#" + entry_message.get("1.0", END) + "#" + self.username
             my_socket = socket.socket()
             my_socket.connect((SERVER, PORT))
