@@ -35,6 +35,8 @@ def chat_receive():
                     senders_list = set(senders_list)
                     for sender in senders_list:
                         chat_database.add_message(username, sender, "###new_message###")
+                        if PrivateChat.in_unread:
+                            PrivateChat.add_unread(sender)
                     chat_database.close_database()
                 my_socket.close()
             time.sleep(2)

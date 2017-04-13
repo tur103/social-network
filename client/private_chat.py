@@ -9,6 +9,7 @@ import os
 class PrivateChat(Page):
 
     in_chat_with = False
+    in_unread = False
 
     def __init__(self, root, username):
         Page.__init__(self, root)
@@ -36,6 +37,7 @@ class PrivateChat(Page):
             length = len(friends)
             if length > 12:
                 length = 12
+            PrivateChat.in_unread = True
             global lb
             lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
                          fg=ORANGE_RED, height=length, selectbackground=CHOCOLATE,
@@ -64,6 +66,7 @@ class PrivateChat(Page):
         global lb
         index = lb.curselection()
         if index:
+            PrivateChat.in_unread = False
             self.selected_user = lb.get(index)
             self.selected_user = self.selected_user.replace("  $unread$", "")
             PrivateChat.in_chat_with = self.selected_user
@@ -153,3 +156,11 @@ class PrivateChat(Page):
         sender = frm + ": "
         chat_box.insert(END, sender + message + "\n")
         chat_box.see(END)
+
+    @staticmethod
+    def add_unread(username):
+        for item in range(lb.size()):
+            if lb.get(item) == username:
+                lb.delete(item)
+                lb.insert(item, username + "  $unread$")
+                break

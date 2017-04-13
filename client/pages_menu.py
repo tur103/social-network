@@ -24,6 +24,7 @@ def add_menu(root, menubutton):
 
 def home_page():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     home = HomePage(global_root)
     home.clear_screen(global_root)
     home.add_elements(global_root, HOME_PAGE)
@@ -31,6 +32,7 @@ def home_page():
 
 def my_wall():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     wall = MyWall(global_root, username)
     wall.clear_screen(global_root)
     wall.add_elements(global_root, MY_WALL)
@@ -38,6 +40,7 @@ def my_wall():
 
 def search_friends():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     search = SearchFriends(global_root, username)
     search.clear_screen(global_root)
     search.add_elements(global_root, SEARCH_FRIENDS)
@@ -45,6 +48,7 @@ def search_friends():
 
 def private_chat():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     chat = PrivateChat(global_root, username)
     chat.clear_screen(global_root)
     chat.add_elements(global_root, PRIVATE_CHAT)
@@ -52,6 +56,7 @@ def private_chat():
 
 def add_friends():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     add = AddFriends(global_root, username)
     add.clear_screen(global_root)
     add.add_elements(global_root, ADD_FRIENDS)
@@ -59,6 +64,7 @@ def add_friends():
 
 def settings_page():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     sett = SettingsPage(global_root, username)
     sett.clear_screen(global_root)
     sett.add_elements(global_root, SETTINGS_PAGE)
@@ -83,6 +89,7 @@ def offline(value=None):
 
 def log_out():
     PrivateChat.in_chat_with = False
+    PrivateChat.in_unread = False
     offline(0)
     global username
     username = None
