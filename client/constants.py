@@ -1,6 +1,6 @@
 HOME_PAGE = "Home Page"
 MY_WALL = "My Wall"
-ICON = "LegBook.ico"
+ICON = "icon.ico"
 SEARCH_FRIENDS = "Search Friends"
 PRIVATE_CHAT = "Private Chat"
 GROUP_CHAT = "Group Chat"
