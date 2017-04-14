@@ -81,8 +81,12 @@ class DataBase(object):
         self.database.commit()
 
     def add_request(self, user):
-        self.database.execute("insert into requests (user) values ('%s')" % user)
-        self.database.commit()
+        try:
+            self.database.execute("insert into requests (user) values ('%s')" % user)
+            self.database.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
 
     def add_user(self, credentials):
         username = credentials[0]

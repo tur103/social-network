@@ -160,9 +160,8 @@ def main():
                     friends_database.close_database()
                     if user not in friends_list:
                         requests_database = DataBase(DIRECTORY + user + REQUESTS_DATABASE)
-                        requests_database.add_request(folder)
+                        match = requests_database.add_request(folder)
                         requests_database.close_database()
-                        match = True
                     else:
                         match = False
                 else:

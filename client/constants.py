@@ -76,10 +76,11 @@ MY_WALL_TEXT = "These is the place where all your life is drains into.\n" \
                "Here you can upload statuses, messages and pictures\n" \
                "from your life in order to share your enjoyment with\n" \
                "all your friends."
-ADD_PAGE_TEXT = "Here you can send friendship requests to another users\n" \
-                "Friendship requests which have sent to you will appear here\n" \
-                "To accept request type its username and click the button\n" \
-                "To decline request type its username + '-not' at the end"
+ADD_PAGE_TEXT = "Here you can send friendship requests to another users.\n" \
+                "Friendship requests which have sent to you will appear here.\n" \
+                "To send a request just type in the username of your friend\n" \
+                "and click the button. To accept or decline a request just\n" \
+                "click on the wanted username and pick your button."
 SEARCH_FRIENDS_TEXT = "Here you can find what other people from all\n" \
                       "over the world have shared Pick a user\n" \
                       "from your friends list and watch his wall"
@@ -91,6 +92,9 @@ PASSWORD = "password"
 EMAIL = "email"
 MESSAGE = "message"
 SEND_EMAIL = "Send Email"
+
+ACCEPT = "Accept"
+DECLINE = "Decline"
 
 SERVER = "127.0.0.1"
 PORT = 8820
