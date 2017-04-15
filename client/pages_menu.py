@@ -9,6 +9,8 @@ from private_chat import *
 
 def add_menu(root, menubutton):
         global global_root
+        global deselect
+        deselect = IntVar()
         global_root = root
         menubutton.menu.add_command(label=HOME_PAGE, command=home_page)
         menubutton.menu.add_command(label=MY_WALL, command=my_wall)
@@ -16,7 +18,7 @@ def add_menu(root, menubutton):
         menubutton.menu.add_command(label=PRIVATE_CHAT, command=private_chat)
         menubutton.menu.add_command(label=ADD_FRIENDS, command=add_friends)
         menubutton.menu.add_command(label=SETTINGS, command=settings_page)
-        menubutton.menu.add_checkbutton(label=OFFLINE, command=offline)
+        menubutton.menu.add_checkbutton(label=OFFLINE, command=offline, variable=deselect)
         menubutton.menu.add_command(label=LOG_OUT, command=log_out)
         menubutton.pack()
         menubutton.place(x=LEFTT)
@@ -91,6 +93,7 @@ def log_out():
     PrivateChat.in_chat_with = False
     PrivateChat.in_unread = False
     offline(0)
+    deselect.set(0)
     global username
     username = None
     set_online(0)

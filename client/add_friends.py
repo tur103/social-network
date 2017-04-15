@@ -52,7 +52,7 @@ class AddFriends(Page):
                         self.add_elements(self.root, ADD_FRIENDS)
                 else:
                     messagebox.showwarning("ERROR!", "Your accept wasn't sent. Try again later.")
-        except (NameError, _tkinter.TclError):
+        except NameError:
             pass
 
     def decline_friend(self):
@@ -71,7 +71,7 @@ class AddFriends(Page):
                         self.add_elements(self.root, ADD_FRIENDS)
                 else:
                     messagebox.showwarning("ERROR!", "Your decline wasn't sent. Try again later.")
-        except (NameError, _tkinter.TclError):
+        except NameError:
             pass
 
     def add_friend(self):
