@@ -1,0 +1,6 @@
+#!C:\work\Python36-32\python.exe
+
+import auto2to3
+
+if __name__ == '__main__':
+    auto2to3.main()

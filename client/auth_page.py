@@ -181,6 +181,9 @@ class AuthPage(Page):
         if not os.path.exists(directory):
             os.mkdir(directory)
             ctypes.windll.kernel32.SetFileAttributesW(directory, 0x02)
+        directory += "/" + username
+        if not os.path.exists(directory):
+            os.mkdir(directory)
         directory += "/"
         self.make_socket()
         request = GET_FRAMES + "#" + username
