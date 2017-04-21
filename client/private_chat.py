@@ -43,7 +43,8 @@ class PrivateChat(Page):
                          fg=ORANGE_RED, height=length, selectbackground=CHOCOLATE,
                          selectmode="single", relief="sunken", width=25, yscrollcommand=scroll.set)
             i = 1
-            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) +
+                                     "/facebook/" + self.username + "/chat.db")
             new_senders = chat_database.new_senders()
             chat_database.close_database()
             for raw in friends:
@@ -98,7 +99,8 @@ class PrivateChat(Page):
                                  command=self.send_message)
             button_send.pack()
             button_send.place(x=750, y=713)
-            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+            chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) +
+                                     "/facebook/" + self.username + "/chat.db")
             message_list = chat_database.get_message()
             for message in message_list:
                 if message[1] != "###new_message###" and \
@@ -142,7 +144,8 @@ class PrivateChat(Page):
             if answer != OK:
                 messagebox.showwarning("Failed", "Your message wasn't sent.\nTry again later.")
             else:
-                chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) + "/facebook/chat.db")
+                chat_database = DataBase(os.path.dirname(os.path.realpath(__file__)) +
+                                         "/facebook/" + self.username + "/chat.db")
                 chat_database.add_message(self.selected_user, self.username, message)
                 chat_database.close_database()
                 global chat_box
