@@ -16,6 +16,18 @@ class MyWall(Page):
         self.username = username
 
     def add_elements(self, root, title):
+        """
+
+        The function displays the my wall page.
+        It allows the user to upload a new status, a new picture
+        and also record a status which will be written down by
+        the program.
+
+        Args:
+            root (Tk): The Tk window.
+            title (string): The name of the page.
+
+        """
         ScrolledWindow(self.root, self.username).pack(side="bottom", fill="both", expand=True)
         global entry_status
         super(MyWall, self).add_elements(root, title)
@@ -40,6 +52,14 @@ class MyWall(Page):
         button_record.place(x=0, y=70)
 
     def upload_picture(self):
+        """
+
+        The function executes when the user press the upload picture button.
+        He gets the explorer window so he can browse his file and pic the
+        picture. The program will get the picture, upload it to the wall
+        and send it to the server.
+
+        """
         file_path = filedialog.askopenfilename()
         if file_path:
             if file_path[-3:].lower() in FORMATS_LIST:
@@ -71,6 +91,14 @@ class MyWall(Page):
                                        "the following formats:\nJPG, PNG")
 
     def upload_status(self):
+        """
+
+        The function executes when the user press the upload status button.
+        It gets the status that the user wrote or recorded.
+        The program will upload the status to the wall and send it to the
+        server.
+
+        """
         global entry_status
         message = entry_status.get()
         if message:
@@ -95,6 +123,12 @@ class MyWall(Page):
             self.add_elements(self.root, MY_WALL)
 
     def record_status(self):
+        """
+
+        The function executes when the user press the record button.
+        It records the user's words and writes them down as a status.
+
+        """
         global entry_status
         # Record Audio
         r = sr.Recognizer()

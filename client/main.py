@@ -12,6 +12,13 @@ def main():
 
 
 def chat_receive():
+    """
+
+    The function checks with the server every 2 seconds weather new
+    messages were sent to the user account.
+    If new message arrived it will be inserted to the database.
+
+    """
     while True:
         if threading.active_count() == 2:
             if get_username() and get_online():

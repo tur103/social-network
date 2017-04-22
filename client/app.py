@@ -8,9 +8,20 @@ class App(threading.Thread):
         self.start()
 
     def callback(self):
+        """
+
+        The function closes the app window.
+
+        """
         self.root.quit()
 
     def run(self):
+        """
+
+        The function creates the Tk window and calls for the first
+        page's display.
+
+        """
         self.root = Tk()
         self.root.protocol("WM_DELETE_WINDOW", self.callback)
         auth_page = AuthPage(self.root)
