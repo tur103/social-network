@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   server.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from database import *
 from smtp import *
 import socket
@@ -23,24 +30,31 @@ def main():
         (client_socket, client_address) = server_socket.accept()
         client_request = client_socket.recv(BUFFER).decode()
         if DATABASE in client_request:
+            # RECEIVED REQUEST FOR ACCESSING THE DATABASE
             database = DataBase(DATABASE_PATH)
             if LOG_IN in client_request:
+                # CHECKS IF THE CREDENTIALS ARE CORRECT
                 credentials = client_request.split("#")[2:]
                 match = database.check_user(credentials)
             elif REGISTER in client_request:
+                # CHECKS IF THE CREDENTIALS ARE AVAILABLE
                 credentials = client_request.split("#")[2:]
                 match = database.add_user(credentials)
                 if match:
-                    chat_database = DataBase(DIRECTORY + credentials[0] + CHAT_DATABASE)
+                    chat_database = DataBase(DIRECTORY + credentials[0] +
+                                             CHAT_DATABASE)
                     chat_database.create_chat_database()
                     chat_database.close_database()
-                    friends_database = DataBase(DIRECTORY + credentials[0] + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + credentials[0] +
+                                                FRIENDS_DATABASE)
                     friends_database.create_friends_database()
                     friends_database.close_database()
-                    requests_database = DataBase(DIRECTORY + credentials[0] + REQUESTS_DATABASE)
+                    requests_database = DataBase(DIRECTORY + credentials[0] +
+                                                 REQUESTS_DATABASE)
                     requests_database.create_requests_database()
                     requests_database.close_database()
             elif CHANGE in client_request:
+                # CHANGE THE STATUS OF THE USER (ONLINE/OFFLINE)
                 credentials = client_request.split("#")[2:]
                 database.update_user(credentials[0], credentials[1])
                 match = NOT
@@ -48,20 +62,24 @@ def main():
                 match = False
             database.close_database()
         elif CONTACT in client_request:
+            # RECEIVED REQUEST FOR CONTACT THE DEVELOPER
             smtp_server = SMTP()
             credentials = client_request.split("#")[1:]
             if len(credentials) == 3:
                 database = DataBase(DATABASE_PATH)
                 credentials[0] = database.get_email(credentials[2])
-                match = smtp_server.send_email(credentials[0], credentials[1], credentials[2])
+                match = smtp_server.send_email(credentials[0], credentials[1],
+                                               credentials[2])
             else:
                 match = smtp_server.send_email(credentials[0], credentials[1])
         elif GET_FRAMES in client_request:
+            # RECEIVED REQUEST FOR RECEIVING USER'S MEDIA
+            # (STATUSES AND PICTURES)
             folder = client_request.split("#")[1]
             frames_list = glob.glob(DIRECTORY + folder + "/*.*")
             new_frames_list = []
             for frame in frames_list:
-                if not FRIENDS_END in frame and not REQUESTS_END in frame:
+                if FRIENDS_END not in frame and REQUESTS_END not in frame:
                     new_frames_list.append(frame)
             client_socket.send(str(len(new_frames_list)).encode())
             for frame in new_frames_list:
@@ -76,6 +94,7 @@ def main():
                     client_socket.send(data)
             match = NOT
         elif UPLOAD_PICTURE in client_request:
+            # RECEIVED REQUEST FOR UPLOADING A NEW PICTURE TO THE WALL
             folder = client_request.split("#")[1] + "/"
             name = client_request.split("#")[2]
             data = client_socket.recv(IMAGE_BUFFER)
@@ -84,6 +103,7 @@ def main():
             new_file.close()
             match = NOT
         elif UPLOAD_STATUS in client_request:
+            # RECEIVED REQUEST FOR UPLOADING A NEW STATUS TO THE WALL
             folder = client_request.split("#")[1] + "/"
             name = client_request.split("#")[2]
             data = client_socket.recv(TEXT_BUFFER).decode()
@@ -92,16 +112,20 @@ def main():
             new_file.close()
             match = NOT
         elif CHANGE in client_request:
+            # RECEIVED REQUEST FOR UPDATING THE USER'S DETAILS
             database = DataBase(DATABASE_PATH)
             if EMAIL in client_request:
+                # CHANGE THE USER'S EMAIL
                 username = client_request.split("#")[2]
                 email = client_request.split("#")[3]
                 match = database.change_email(username, email)
             elif PASSWORD in client_request:
+                # CHANGE THE USER'S PASSWORD
                 username = client_request.split("#")[2]
                 password = client_request.split("#")[3]
                 match = database.change_password(username, password)
         elif FORGOT in client_request:
+            # RECEIVED REQUEST FOR RESTORING THE PASSWORD
             smtp_server = SMTP()
             database = DataBase(DATABASE_PATH)
             username = client_request.split("#")[1]
@@ -112,6 +136,7 @@ def main():
             else:
                 match = False
         elif GET_CHAT in client_request:
+            # RECEIVED REQUEST FOR RECEIVING NEW MESSAGES IF WERE SENT
             user = client_request.split("#")[1]
             chat_database = DataBase(SERVER_CHAT)
             message_list = chat_database.get_message(user)
@@ -121,6 +146,7 @@ def main():
                 client_socket.send(NO.encode())
             match = NOT
         elif SEND_MESSAGE in client_request:
+            # RECEIVED REQUEST FOR SENDING A NEW MESSAGE IN THE PRIVATE CHAT
             too = client_request.split("#")[1]
             frm = client_request.split("#")[2]
             message = client_request.split("#")[3]
@@ -135,18 +161,22 @@ def main():
             frm_database.close_database()
             match = True
         elif ADD_FRIEND in client_request:
+            # RECEIVED REQUEST FOR ADDING A NEW FRIEND (BY USERNAME)
             folder = client_request.split("#")[1]
             init_user = client_request.split("#")[2]
             user = init_user.split("-not")[0]
-            requests_database = DataBase(DIRECTORY + folder + REQUESTS_DATABASE)
+            requests_database = DataBase(DIRECTORY + folder +
+                                         REQUESTS_DATABASE)
             ans = requests_database.delete_request(user)
             requests_database.close_database()
             if ans:
-                if not "-not" in init_user:
-                    friends_database = DataBase(DIRECTORY + folder + FRIENDS_DATABASE)
+                if "-not" not in init_user:
+                    friends_database = DataBase(DIRECTORY + folder +
+                                                FRIENDS_DATABASE)
                     friends_database.add_friend(user)
                     friends_database.close_database()
-                    friends_database = DataBase(DIRECTORY + user + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + user +
+                                                FRIENDS_DATABASE)
                     friends_database.add_friend(folder)
                     friends_database.close_database()
                 match = True
@@ -155,11 +185,13 @@ def main():
                 users_list = database.get_users()
                 database.close_database()
                 if user in users_list:
-                    friends_database = DataBase(DIRECTORY + folder + FRIENDS_DATABASE)
+                    friends_database = DataBase(DIRECTORY + folder +
+                                                FRIENDS_DATABASE)
                     friends_list = friends_database.get_friends()
                     friends_database.close_database()
                     if user not in friends_list:
-                        requests_database = DataBase(DIRECTORY + user + REQUESTS_DATABASE)
+                        requests_database = DataBase(DIRECTORY + user +
+                                                     REQUESTS_DATABASE)
                         match = requests_database.add_request(folder)
                         requests_database.close_database()
                     else:
@@ -167,13 +199,16 @@ def main():
                 else:
                     match = False
         elif GET_REQUESTS in client_request:
+            # RECEIVED REQUEST FOR RECEIVING ALL USER'S FRIENDSHIP REQUESTS
             folder = client_request.split("#")[1]
-            requests_database = DataBase(DIRECTORY + folder + REQUESTS_DATABASE)
+            requests_database = DataBase(DIRECTORY + folder +
+                                         REQUESTS_DATABASE)
             list_of_requests = requests_database.get_requests()
             string_of_requests = ",".join(list_of_requests)
             client_socket.send(string_of_requests.encode())
             match = NOT
         elif GET_FRIENDS in client_request:
+            # RECEIVED REQUEST FOR RECEIVING ALL THE USER'S FRIENDS
             user = client_request.split("#")[1]
             friends_database = DataBase(DIRECTORY + user + FRIENDS_DATABASE)
             list_of_friends = friends_database.get_friends()
