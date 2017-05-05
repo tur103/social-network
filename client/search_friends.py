@@ -29,7 +29,8 @@ class SearchFriends(Page):
 
         """
         super(SearchFriends, self).add_elements(root, title)
-        label = Label(root, font=self.font1, fg=FIREBRICK1, text=SEARCH_FRIENDS_TEXT)
+        label = Label(root, font=self.font1, fg=FIREBRICK1,
+                      text=SEARCH_FRIENDS_TEXT)
         label.pack()
         label.place(x=150, y=100)
         self.add_friends_scrollbar()
@@ -56,7 +57,8 @@ class SearchFriends(Page):
             global lb
             lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
                          fg=ORANGE_RED, height=length, selectbackground=GREEN,
-                         selectmode="single", relief="sunken", width=20, yscrollcommand=scroll.set)
+                         selectmode="single", relief="sunken", width=20,
+                         yscrollcommand=scroll.set)
             i = 1
             for raw in friends:
                 lb.insert(i, raw)
@@ -82,7 +84,9 @@ class SearchFriends(Page):
         if index:
             selected_user = lb.get(index)
             self.get_frames(selected_user)
-            ScrolledWindow(self.root, selected_user).pack(side="bottom", fill="both", expand=True)
+            ScrolledWindow(self.root, selected_user).pack(side="bottom",
+                                                          fill="both",
+                                                          expand=True)
 
     def get_frames(self, username):
         """
@@ -97,7 +101,8 @@ class SearchFriends(Page):
             username (string): The username of the account.
 
         """
-        directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + username
+        directory = os.path.dirname(
+            os.path.realpath(__file__)) + "/facebook/" + username
         if not os.path.exists(directory):
             os.mkdir(directory)
         directory += "/"
@@ -110,7 +115,7 @@ class SearchFriends(Page):
             frames = int(frames)
             for frame in range(frames):
                 name = sock.recv(NAME_BUFFER).decode()
-                if name != OK and not CHAT_DATABASE in name and \
+                if name != OK and CHAT_DATABASE not in name and \
                         not os.path.exists(directory + name):
                     sock.send(OK.encode())
                     data = sock.recv(WALL_BUFFER)
@@ -120,6 +125,6 @@ class SearchFriends(Page):
                 else:
                     sock.send(NON.encode())
         except ValueError:
-            #The user didn't update media yet
+            # The user didn't update media yet
             pass
         sock.close()

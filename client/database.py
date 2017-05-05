@@ -42,7 +42,8 @@ class DataBase(object):
 
         """
         self.database.execute("insert into chat (too, frm, message) "
-                              "values ('%s', '%s', '%s')" % (to, frm, message))
+                              "values ('%s', '%s', '%s')" % (to, frm,
+                                                             message))
         self.database.commit()
 
     def get_message(self):
@@ -81,15 +82,16 @@ class DataBase(object):
     def delete_new_senders(self, user):
         """
 
-        The function deletes a user from the list of the new senders when the
-        current user just read his messages.
+        The function deletes a user from the list of the new senders when
+        the current user just read his messages.
 
         Args:
             user (string): The friend that the user just read his messages.
 
         """
         try:
-            self.database.execute("delete from chat where message = '###new_message###' "
+            self.database.execute("delete from chat where message = "
+                                  "'###new_message###' "
                                   "and frm = '%s'" % user)
             self.database.commit()
         except sqlite3.IntegrityError:

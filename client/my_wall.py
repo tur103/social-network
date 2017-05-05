@@ -35,24 +35,30 @@ class MyWall(Page):
             title (string): The name of the page.
 
         """
-        ScrolledWindow(self.root, self.username).pack(side="bottom", fill="both", expand=True)
+        ScrolledWindow(self.root, self.username).pack(side="bottom",
+                                                      fill="both",
+                                                      expand=True)
         global entry_status
         super(MyWall, self).add_elements(root, title)
-        entry_status = Entry(self.root, bg=CHOCOLATE, fg=WHITE, bd=5, font=self.font1,
-                             exportselection=0, insertbackground=GOLD, insertwidth=10, width=35)
+        entry_status = Entry(self.root, bg=CHOCOLATE, fg=WHITE, bd=5,
+                             font=self.font1, exportselection=0,
+                             insertbackground=GOLD, insertwidth=10, width=35)
         entry_status.pack()
         entry_status.place(x=122, y=80)
-        button_status = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+        button_status = Button(root, bg=ROYAL_BLUE,
+                               activebackground=ROYAL_BLUE,
                                font=self.font1, fg=WHITE, text=UPLOAD_STATUS,
                                command=self.upload_status)
         button_status.pack()
         button_status.place(x=660, y=70)
-        button_picture = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
-                                font=self.font1, fg=WHITE, text=UPLOAD_PICTURE,
+        button_picture = Button(root, bg=ROYAL_BLUE,
+                                activebackground=ROYAL_BLUE, font=self.font1,
+                                fg=WHITE, text=UPLOAD_PICTURE,
                                 command=self.upload_picture)
         button_picture.pack()
         button_picture.place(x=650, y=10)
-        button_record = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+        button_record = Button(root, bg=ROYAL_BLUE,
+                               activebackground=ROYAL_BLUE,
                                font=self.font1, fg=WHITE, text=RECORD,
                                command=self.record_status)
         button_record.pack()
@@ -70,8 +76,9 @@ class MyWall(Page):
         file_path = filedialog.askopenfilename()
         if file_path:
             if file_path[-3:].lower() in FORMATS_LIST:
-                directory = os.path.dirname(os.path.realpath(__file__)) + \
-                            "/facebook/" + self.username + "/" + file_path.split("/")[-1]
+                directory = os.path.dirname(
+                    os.path.realpath(__file__)) + "/facebook/" + \
+                    self.username + "/" + file_path.split("/")[-1]
                 chosen_file = open(file_path, "rb")
                 data = chosen_file.read()
                 chosen_file.close()
@@ -86,7 +93,8 @@ class MyWall(Page):
                 new_file.close()
                 sock = socket.socket()
                 sock.connect((SERVER, PORT))
-                request = "uploadpicture#" + self.username + "#" + file_path.split("/")[-1]
+                request = "uploadpicture#" + self.username + "#" + \
+                          file_path.split("/")[-1]
                 sock.send(request.encode())
                 time.sleep(1)
                 sock.send(data)
@@ -109,13 +117,15 @@ class MyWall(Page):
         global entry_status
         message = entry_status.get()
         if message:
-            list_of_files = glob.glob(os.path.dirname(os.path.realpath(__file__))
-                                      + "/facebook/" + self.username + "/*.txt")
+            list_of_files = glob.glob(
+                os.path.dirname(os.path.realpath(__file__)) + "/facebook/" +
+                self.username + "/*.txt")
             number_of_files = len(list_of_files)
             name = "status-" + str(number_of_files + 1)
             request = "uploadstatus#" + self.username + "#" + name
-            directory = os.path.dirname(os.path.realpath(__file__)) + \
-                        "/facebook/" + self.username + "/" + name + ".txt"
+            directory = os.path.dirname(
+                os.path.realpath(__file__)) + "/facebook/" + \
+                self.username + "/" + name + ".txt"
             new_file = open(directory, "w")
             new_file.write(message)
             new_file.close()
@@ -147,8 +157,13 @@ class MyWall(Page):
                 entry_status.delete(0, END)
                 entry_status.insert(0, r.recognize_google(audio))
             except sr.UnknownValueError:
-                messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
+                messagebox.showwarning("Failed", "sorry, what were you "
+                                                 "saying?\nI didn't realize "
+                                                 "it. try again")
             except sr.RequestError as e:
-                messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
+                messagebox.showwarning("Failed", "Could not get results from "
+                                                 "Speech Recognition "
+                                                 "service; {0}".format(e))
         except OSError:
-            messagebox.showwarning("ERROR", "No Default Input Device Available")
+            messagebox.showwarning("ERROR", "No Default Input Device "
+                                            "Available")

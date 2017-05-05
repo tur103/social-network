@@ -34,7 +34,8 @@ def add_menu(root, menubutton):
     menubutton.menu.add_command(label=PRIVATE_CHAT, command=private_chat)
     menubutton.menu.add_command(label=ADD_FRIENDS, command=add_friends)
     menubutton.menu.add_command(label=SETTINGS, command=settings_page)
-    menubutton.menu.add_checkbutton(label=OFFLINE, command=offline, variable=deselect)
+    menubutton.menu.add_checkbutton(label=OFFLINE, command=offline,
+                                    variable=deselect)
     menubutton.menu.add_command(label=LOG_OUT, command=log_out)
     menubutton.pack()
     menubutton.place(x=LEFTT)

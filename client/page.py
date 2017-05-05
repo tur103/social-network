@@ -36,7 +36,8 @@ class Page(object):
         """
         menubutton = Menubutton(root, activebackground=MAGENTA,
                                 activeforeground=CYAN, cursor=PLUS_CURSOR,
-                                bg=ORANGE_RED, fg=CYAN, disabledforeground=BLACK,
+                                bg=ORANGE_RED, fg=CYAN,
+                                disabledforeground=BLACK,
                                 highlightcolor=WHITE, text=MENU_TITLE, bd=10,
                                 relief=RAISED, font=self.font1)
         menubutton.menu = Menu(menubutton, font=self.font2,

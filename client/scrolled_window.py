@@ -20,7 +20,8 @@ class ScrolledWindow(tk.Frame):
         self.font4 = tkFontChooser.Font(size=STATUS_SIZE)
         self.canvas = tk.Canvas(root, borderwidth=0, height=650, width=900)
         self.frame = tk.Frame(self.canvas)
-        self.vsb = tk.Scrollbar(root, orient="vertical", command=self.canvas.yview)
+        self.vsb = tk.Scrollbar(root, orient="vertical",
+                                command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.vsb.set)
 
         self.vsb.pack(side="right", fill="y")
@@ -44,15 +45,17 @@ class ScrolledWindow(tk.Frame):
 
         """
         if dirr:
-            directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + dirr + "/*.*"
+            directory = os.path.dirname(
+                os.path.realpath(__file__)) + "/facebook/" + dirr + "/*.*"
         else:
-            directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/*.*"
+            directory = os.path.dirname(
+                os.path.realpath(__file__)) + "/facebook/*.*"
         frames_list = glob.glob(directory)
         frames_list.sort(key=os.path.getmtime)
         frames_list = frames_list[::-1]
         yplace = 5
         for frame in frames_list:
-            if not CHAT in frame:
+            if CHAT not in frame:
                 if frame.split(".")[-1] == "txt":
                     file = open(frame, "r")
                     data = file.read()
@@ -60,8 +63,10 @@ class ScrolledWindow(tk.Frame):
                     rows = 0
                     if len(data) > 100:
                         rows = (len(data) // 100 + 1) * 5
-                        data = "\n".join([data[i: i + 100] for i in range(0, len(data), 100)])
-                    tk.Label(self.frame, text=data, font=self.font4).grid(row=yplace, pady=10)
+                        data = "\n".join([data[i: i + 100] for i in
+                                          range(0, len(data), 100)])
+                    tk.Label(self.frame, text=data,
+                             font=self.font4).grid(row=yplace, pady=10)
                     yplace += 5
                     yplace += rows
                 else:

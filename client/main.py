@@ -29,7 +29,8 @@ def chat_receive():
     while True:
         if threading.active_count() == 2:
             if get_username() and get_online():
-                directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/"
+                directory = os.path.dirname(
+                    os.path.realpath(__file__)) + "/facebook/"
                 username = get_username()
                 directory += username + "/chat.db"
                 my_socket = socket.socket()
@@ -49,7 +50,8 @@ def chat_receive():
                             senders_list.append(row[1])
                     senders_list = set(senders_list)
                     for sender in senders_list:
-                        chat_database.add_message(username, sender, "###new_message###")
+                        chat_database.add_message(username, sender,
+                                                  "###new_message###")
                         if PrivateChat.in_unread:
                             PrivateChat.add_unread(sender)
                     chat_database.close_database()

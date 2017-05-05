@@ -24,7 +24,9 @@ class HomePage(Page):
 
         """
         super(HomePage, self).add_elements(root, title)
-        label1 = Label(root, font=self.font1, fg=FIREBRICK1, text=HOME_PAGE_TEXT1, pady=35)
+        label1 = Label(root, font=self.font1, fg=FIREBRICK1,
+                       text=HOME_PAGE_TEXT1, pady=35)
         label1.pack()
-        label1 = Label(root, font=self.font1, fg=GOLD, text=HOME_PAGE_TEXT2, justify="left")
+        label1 = Label(root, font=self.font1, fg=GOLD, text=HOME_PAGE_TEXT2,
+                       justify="left")
         label1.pack()
