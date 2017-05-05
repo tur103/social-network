@@ -48,10 +48,10 @@ class DataBase(object):
             list: The list of all the senders and messages.
 
         """
-        cursor = self.database.execute("select frm, message from chat")
+        cursor = self.database.execute("select frm, message, too from chat")
         messages_list = []
         for row in cursor:
-            messages_list.append((row[0], row[1]))
+            messages_list.append((row[0], row[1], row[2]))
         return messages_list
 
     def new_senders(self):

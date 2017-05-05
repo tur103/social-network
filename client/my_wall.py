@@ -129,19 +129,22 @@ class MyWall(Page):
         It records the user's words and writes them down as a status.
 
         """
-        global entry_status
-        # Record Audio
-        r = sr.Recognizer()
-        with sr.Microphone() as source:
-            audio = r.listen(source)
-        # Speech recognition using Google Speech Recognition
         try:
-            # for testing purposes, we're just using the default API key
-            # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-            # instead of `r.recognize_google(audio)`
-            entry_status.delete(0, END)
-            entry_status.insert(0, r.recognize_google(audio))
-        except sr.UnknownValueError:
-            messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
-        except sr.RequestError as e:
-            messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
+            global entry_status
+            # Record Audio
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                audio = r.listen(source)
+            # Speech recognition using Google Speech Recognition
+            try:
+                # for testing purposes, we're just using the default API key
+                # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+                # instead of `r.recognize_google(audio)`
+                entry_status.delete(0, END)
+                entry_status.insert(0, r.recognize_google(audio))
+            except sr.UnknownValueError:
+                messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
+            except sr.RequestError as e:
+                messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
+        except OSError:
+            messagebox.showwarning("ERROR", "No Default Input Device Available")

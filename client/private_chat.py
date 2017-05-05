@@ -104,7 +104,9 @@ class PrivateChat(Page):
             message_list = chat_database.get_message()
             for message in message_list:
                 if message[1] != "###new_message###" and \
-                        (message[0] == self.username or message[0] == self.selected_user):
+                        ((message[0] == self.username and message[2] ==
+                            self.selected_user) or message[0] ==
+                            self.selected_user):
                     if message[0] == self.username:
                         sender = "me:  "
                     else:
@@ -115,22 +117,25 @@ class PrivateChat(Page):
             chat_database.close_database()
 
     def record_message(self):
-        global message_entry
-        # Record Audio
-        r = sr.Recognizer()
-        with sr.Microphone() as source:
-            audio = r.listen(source)
-        # Speech recognition using Google Speech Recognition
         try:
-            # for testing purposes, we're just using the default API key
-            # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-            # instead of `r.recognize_google(audio)`
-            message_entry.delete(0, END)
-            message_entry.insert(0, r.recognize_google(audio))
-        except sr.UnknownValueError:
-            messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
-        except sr.RequestError as e:
-            messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
+            global message_entry
+            # Record Audio
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                audio = r.listen(source)
+            # Speech recognition using Google Speech Recognition
+            try:
+                # for testing purposes, we're just using the default API key
+                # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+                # instead of `r.recognize_google(audio)`
+                message_entry.delete(0, END)
+                message_entry.insert(0, r.recognize_google(audio))
+            except sr.UnknownValueError:
+                messagebox.showwarning("Failed", "sorry, what were you saying?\nI didn't realize it. try again")
+            except sr.RequestError as e:
+                messagebox.showwarning("Failed", "Could not get results from Speech Recognition service; {0}".format(e))
+        except OSError:
+            messagebox.showwarning("ERROR", "No Default Input Device Available")
 
     def send_message(self):
         global message_entry
