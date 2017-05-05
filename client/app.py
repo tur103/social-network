@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   app.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 import threading
 from auth_page import *
 

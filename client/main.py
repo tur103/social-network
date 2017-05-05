@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   main.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from app import *
 from constants import *
 import time

@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   add_friends.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from page import *
 import socket
 from tkinter import messagebox
@@ -23,25 +30,31 @@ class AddFriends(Page):
 
         """
         super(AddFriends, self).add_elements(root, title)
-        label1 = Label(root, font=self.font1, fg=FIREBRICK1, text=ADD_PAGE_TEXT)
+        label1 = Label(root, font=self.font1, fg=FIREBRICK1,
+                       text=ADD_PAGE_TEXT)
         label1.pack()
         label1.place(x=20, y=60)
         global entry_username
-        entry_username = Entry(root, bg=CHOCOLATE, fg=WHITE, bd=5, font=self.font1,
-                               exportselection=0, insertbackground=GOLD, insertwidth=10, width=20)
+        entry_username = Entry(root, bg=CHOCOLATE, fg=WHITE, bd=5,
+                               font=self.font1, exportselection=0,
+                               insertbackground=GOLD, insertwidth=10,
+                               width=20)
         entry_username.pack()
         entry_username.place(x=250, y=250)
-        button_username = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+        button_username = Button(root, bg=ROYAL_BLUE,
+                                 activebackground=ROYAL_BLUE,
                                  font=self.font1, fg=WHITE, text=ADD_FRIENDS,
                                  command=self.add_friend)
         button_username.pack()
         button_username.place(x=650, y=250)
-        button_accept = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+        button_accept = Button(root, bg=ROYAL_BLUE,
+                               activebackground=ROYAL_BLUE,
                                font=self.font1, fg=WHITE, text=ACCEPT,
                                command=self.accept_friend)
         button_accept.pack()
         button_accept.place(x=50, y=600)
-        button_decline = Button(root, bg=ROYAL_BLUE, activebackground=ROYAL_BLUE,
+        button_decline = Button(root, bg=ROYAL_BLUE,
+                                activebackground=ROYAL_BLUE,
                                 font=self.font1, fg=WHITE, text=DECLINE,
                                 command=self.decline_friend)
         button_decline.pack()
@@ -66,11 +79,14 @@ class AddFriends(Page):
                 sock.send(request.encode())
                 answer = sock.recv(CHECK_BUFFER).decode()
                 if answer == OK:
-                        messagebox.showwarning("SUCCESS!", "Congratulations for the new friendship!")
+                        messagebox.showwarning("SUCCESS!", "Congratulations "
+                                                           "for the new "
+                                                           "friendship!")
                         self.clear_screen(self.root)
                         self.add_elements(self.root, ADD_FRIENDS)
                 else:
-                    messagebox.showwarning("ERROR!", "Your accept wasn't sent. Try again later.")
+                    messagebox.showwarning("ERROR!", "Your accept wasn't "
+                                                     "sent. Try again later.")
         except NameError:
             pass
 
@@ -92,11 +108,14 @@ class AddFriends(Page):
                 sock.send(request.encode())
                 answer = sock.recv(CHECK_BUFFER).decode()
                 if answer == OK:
-                        messagebox.showwarning("SUCCESS!", "Your decline was sent successfully")
+                        messagebox.showwarning("SUCCESS!", "Your decline was "
+                                                           "sent "
+                                                           "successfully")
                         self.clear_screen(self.root)
                         self.add_elements(self.root, ADD_FRIENDS)
                 else:
-                    messagebox.showwarning("ERROR!", "Your decline wasn't sent. Try again later.")
+                    messagebox.showwarning("ERROR!", "Your decline wasn't "
+                                                     "sent. Try again later.")
         except NameError:
             pass
 
@@ -118,15 +137,22 @@ class AddFriends(Page):
                 sock.send(request.encode())
                 answer = sock.recv(CHECK_BUFFER).decode()
                 if answer == OK:
-                    messagebox.showwarning("SUCCESS!", "Your friendship request was sent successfully")
+                    messagebox.showwarning("SUCCESS!", "Your friendship "
+                                                       "request was sent "
+                                                       "successfully")
                     self.clear_screen(self.root)
                     self.add_elements(self.root, ADD_FRIENDS)
                 else:
-                    messagebox.showwarning("ERROR!", "Your friendship request was not sent\n"
-                                                     "1) this username is invalid\n"
-                                                     "2) You already sent friendship request for this username")
+                    messagebox.showwarning("ERROR!", "Your friendship "
+                                                     "request was not sent\n"
+                                                     "1) this username is "
+                                                     "invalid\n"
+                                                     "2) You already sent "
+                                                     "friendship request for "
+                                                     "this username")
         else:
-            messagebox.showwarning("ERROR!", "Your cannot friendship yourself!")
+            messagebox.showwarning("ERROR!", "Your cannot "
+                                             "friendship yourself!")
 
     def show_requests(self):
         """
@@ -151,7 +177,8 @@ class AddFriends(Page):
             global lb
             lb = Listbox(self.root, bd=10, bg=PEACHPUFF2, font=self.font1,
                          fg=ORANGE_RED, height=length, selectbackground=GREEN,
-                         selectmode="single", relief="sunken", width=20, yscrollcommand=scroll.set)
+                         selectmode="single", relief="sunken", width=20,
+                         yscrollcommand=scroll.set)
             i = 1
             for raw in requests:
                 lb.insert(i, raw)

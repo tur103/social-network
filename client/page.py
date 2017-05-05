@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   page.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from tkinter import *
 import tkFontChooser
 from constants import *

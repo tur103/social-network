@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   settings_page.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from page import *
 import socket
 from tkinter import messagebox
@@ -10,6 +17,17 @@ class SettingsPage(Page):
         self.username = username
 
     def add_elements(self, root, title):
+        """
+
+        The function displays the settings page.
+        In this page the user can change email, change password
+        and send an email to the developer for requests.
+
+        Args:
+            root (Tk): The Tk window.
+            title (string): The name of the page.
+
+        """
         super(SettingsPage, self).add_elements(root, title)
         global entry_email
         label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
@@ -55,6 +73,12 @@ class SettingsPage(Page):
         button_message.pack()
 
     def change_email(self):
+        """
+
+        The function executes when the user wants to change his email.
+        It gets his new email and sends to the server a change email request.
+
+        """
         global entry_email
         if entry_email.get():
             request = "change#email#" + self.username + "#" + entry_email.get()
@@ -73,6 +97,12 @@ class SettingsPage(Page):
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
     def change_password(self):
+        """
+
+        The function executes when the user wants to change his password.
+        It gets his new password and sends to the server a change password request.
+
+        """
         global entry_password
         global entry_new_password
         if entry_password.get() and entry_new_password.get():
@@ -95,6 +125,13 @@ class SettingsPage(Page):
             messagebox.showwarning("INVALID", "Some of the details are missing")
 
     def send_email(self):
+        """
+
+        The function executes when the user wants to send an email to the
+        developer. It gets his message and sends to the developer email his
+        request.
+
+        """
         global entry_message
         if entry_message.get("1.0", END + "-1c"):
             request = "contact#user#" + entry_message.get("1.0", END) + "#" + self.username

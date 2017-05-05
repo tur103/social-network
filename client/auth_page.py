@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   auth_page.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from pages_menu import *
 from tkinter import *
 from tkinter import messagebox
@@ -27,9 +34,12 @@ class AuthPage(Page):
         menubutton = super(AuthPage, self).set_menu_button(root)
         self.log_in_page()
         menubutton.menu.add_command(label=LOG_IN, command=self.log_in_page)
-        menubutton.menu.add_command(label=REGISTER, command=self.register_page)
-        menubutton.menu.add_command(label=FORGOT_PASSWORD, command=self.forgot_password_page)
-        menubutton.menu.add_command(label=CONTACT_US, command=self.contact_us_page)
+        menubutton.menu.add_command(label=REGISTER,
+                                    command=self.register_page)
+        menubutton.menu.add_command(label=FORGOT_PASSWORD,
+                                    command=self.forgot_password_page)
+        menubutton.menu.add_command(label=CONTACT_US,
+                                    command=self.contact_us_page)
         return menubutton
 
     def log_in_page(self):
@@ -40,7 +50,8 @@ class AuthPage(Page):
         """
         self.clear_screen(self.root)
         self.add_elements(self.root, LOG_IN)
-        text = Label(self.root, bd=0, font=self.font1, text=LOG_IN_TEXT, pady=100)
+        text = Label(self.root, bd=0, font=self.font1, text=LOG_IN_TEXT,
+                     pady=100)
         text.pack()
         self.display_structure()
         l = Label(self.root, pady=20)
@@ -58,14 +69,17 @@ class AuthPage(Page):
         """
         self.clear_screen(self.root)
         self.add_elements(self.root, REGISTER)
-        text = Label(self.root, bd=0, font=self.font1, text=REGISTER_TEXT, pady=40)
+        text = Label(self.root, bd=0, font=self.font1, text=REGISTER_TEXT,
+                     pady=40)
         text.pack()
         self.display_structure()
         global entry_email
-        label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=EMAIL, pady=20)
+        label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                            text=EMAIL, pady=20)
         label_email.pack()
         entry_email = Entry(self.root,  bg=GREEN, bd=5, font=self.font1,
-                            exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+                            exportselection=0, fg=RED, insertbackground=CYAN,
+                            insertwidth=10)
         entry_email.pack()
         l = Label(self.root, pady=20)
         l.pack()
@@ -84,20 +98,25 @@ class AuthPage(Page):
         """
         self.clear_screen(self.root)
         self.add_elements(self.root, CONTACT_US)
-        text = Label(self.root, bd=0, font=self.font1, text=CONTACT_US_TEXT, pady=60)
+        text = Label(self.root, bd=0, font=self.font1, text=CONTACT_US_TEXT,
+                     pady=60)
         text.pack()
-        label_address = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=EMAIL)
+        label_address = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                              text=EMAIL)
         label_address.pack()
         global entry_address
         entry_address = Entry(self.root, bg=GREEN, bd=5, font=self.font1,
-                              exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+                              exportselection=0, fg=RED, insertbackground=CYAN,
+                              insertwidth=10)
         entry_address.pack()
-        label_message = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=MESSAGE, pady=20)
+        label_message = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                              text=MESSAGE, pady=20)
         label_message.pack()
         global entry_message
         entry_message = Text(self.root, bg=GREEN, bd=5, font=self.font1,
                              fg=RED, exportselection=0, height=6,
-                             insertbackground=CYAN, insertwidth=10, selectbackground=MAGENTA, width=40,
+                             insertbackground=CYAN, insertwidth=10,
+                             selectbackground=MAGENTA, width=40,
                              wrap="word")
         entry_message.pack()
         l = Label(self.root, pady=5)
@@ -117,7 +136,8 @@ class AuthPage(Page):
         """
         self.clear_screen(self.root)
         self.add_elements(self.root, FORGOT_PASSWORD)
-        text = Label(self.root, bd=0, font=self.font1, text=FORGOT_PASSWORD_TEXT, pady=100)
+        text = Label(self.root, bd=0, font=self.font1,
+                     text=FORGOT_PASSWORD_TEXT, pady=100)
         text.pack()
         global entry_username
         global entry_email
@@ -125,12 +145,16 @@ class AuthPage(Page):
                                text=USERNAME, pady=20)
         label_username.pack()
         entry_username = Entry(self.root,  bg=GREEN, bd=5, font=self.font1,
-                               exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+                               exportselection=0, fg=RED,
+                               insertbackground=CYAN,
+                               insertwidth=10)
         entry_username.pack()
-        label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=EMAIL, pady=20)
+        label_email = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                            text=EMAIL, pady=20)
         label_email.pack()
         entry_email = Entry(self.root, bg=GREEN, bd=5, font=self.font1,
-                            exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+                            exportselection=0, fg=RED, insertbackground=CYAN,
+                            insertwidth=10)
         entry_email.pack()
         l = Label(self.root, pady=20)
         l.pack()
@@ -152,12 +176,15 @@ class AuthPage(Page):
                                text=USERNAME, pady=20)
         label_username.pack()
         entry_username = Entry(self.root,  bg=GREEN, bd=5, font=self.font1,
-                               exportselection=0, fg=RED, insertbackground=CYAN, insertwidth=10)
+                               exportselection=0, fg=RED,
+                               insertbackground=CYAN, insertwidth=10)
         entry_username.pack()
-        label_password = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1, text=PASSWORD, pady=20)
+        label_password = Label(self.root, fg=CHOCOLATE, bd=0, font=self.font1,
+                               text=PASSWORD, pady=20)
         label_password.pack()
         entry_password = Entry(self.root, bg=GREEN, bd=5, font=self.font1,
-                               exportselection=0, fg=RED, show="*", insertbackground=CYAN, insertwidth=10)
+                               exportselection=0, fg=RED, show="*",
+                               insertbackground=CYAN, insertwidth=10)
         entry_password.pack()
 
     def log_in_user(self):
@@ -171,7 +198,8 @@ class AuthPage(Page):
         """
         global entry_username
         global entry_password
-        request = "database#login#" + entry_username.get() + "#" + entry_password.get()
+        request = "database#login#" + entry_username.get() + "#" + \
+                  entry_password.get()
         self.make_socket()
         self.socket.send(request.encode())
         answer = self.socket.recv(CHECK_BUFFER).decode()
@@ -193,8 +221,10 @@ class AuthPage(Page):
         global entry_username
         global entry_password
         global entry_email
-        if entry_username.get() and entry_password.get() and entry_email.get():
-            request = "database#register#" + entry_username.get() + "#" + entry_password.get() + "#" + entry_email.get()
+        if entry_username.get() and entry_password.get() and \
+                entry_email.get():
+            request = "database#register#" + entry_username.get() + \
+                      "#" + entry_password.get() + "#" + entry_email.get()
             self.make_socket()
             self.socket.send(request.encode())
             answer = self.socket.recv(CHECK_BUFFER).decode()
@@ -203,9 +233,11 @@ class AuthPage(Page):
                 save_username(entry_username.get())
                 self.enter(entry_username.get())
             else:
-                messagebox.showwarning("INVALID", "Invalid username, password or email")
+                messagebox.showwarning("INVALID", "Invalid username, "
+                                                  "password or email")
         else:
-            messagebox.showwarning("INVALID", "Some of the details are missing")
+            messagebox.showwarning("INVALID", "Some of the details "
+                                              "are missing")
 
     def forgot_password(self):
         """
@@ -218,18 +250,22 @@ class AuthPage(Page):
         global entry_username
         global entry_email
         if entry_username.get() and entry_email.get():
-            request = "forgot#" + entry_username.get() + "#" + entry_email.get()
+            request = "forgot#" + entry_username.get() + "#" + \
+                      entry_email.get()
             self.make_socket()
             self.socket.send(request.encode())
             answer = self.socket.recv(CHECK_BUFFER).decode()
             self.socket.close()
             if answer == OK:
                 self.forgot_password_page()
-                messagebox.showwarning("SUCCESS!", "Your password was sent to your email successfully")
+                messagebox.showwarning("SUCCESS!", "Your password was sent "
+                                                   "to your email "
+                                                   "successfully")
             else:
                 messagebox.showwarning("INVALID", "Invalid username or email")
         else:
-            messagebox.showwarning("INVALID", "Some of the details are missing")
+            messagebox.showwarning("INVALID", "Some of the details are "
+                                              "missing")
 
     def enter(self, username):
         """
@@ -286,7 +322,7 @@ class AuthPage(Page):
                 else:
                     self.socket.send(NON.encode())
         except ValueError:
-            #The user didn't update media yet
+            # The user didn't update media yet
             pass
         self.socket.close()
 
@@ -301,18 +337,23 @@ class AuthPage(Page):
         global entry_address
         global entry_message
         if entry_address.get() and entry_message.get("1.0", END + "-1c"):
-            request = "contact#" + entry_address.get() + "#" + entry_message.get("1.0", END)
+            request = "contact#" + entry_address.get() + "#" + \
+                      entry_message.get("1.0", END)
             self.make_socket()
             self.socket.send(request.encode())
             answer = self.socket.recv(CHECK_BUFFER).decode()
             self.socket.close()
             if answer == OK:
-                messagebox.showwarning("SUCCESS!", "Your email was sent successfully")
+                messagebox.showwarning("SUCCESS!", "Your email was sent "
+                                                   "successfully")
                 self.contact_us_page()
             else:
-                messagebox.showwarning("ERROR", "Your email was not sent from some reason.\nTry again later")
+                messagebox.showwarning("ERROR", "Your email was not sent "
+                                                "from some reason.\nTry "
+                                                "again later")
         else:
-            messagebox.showwarning("INVALID", "Some of the details are missing")
+            messagebox.showwarning("INVALID", "Some of the details are "
+                                              "missing")
 
     def make_socket(self):
         """

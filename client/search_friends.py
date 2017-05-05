@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   search_friends.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from page import *
 import socket
 from scrolled_window import *
@@ -10,6 +17,17 @@ class SearchFriends(Page):
         self.username = username
 
     def add_elements(self, root, title):
+        """
+
+        The function displays the search friends page.
+        The user can choose one friend from his friends list
+        and see his wall.
+
+        Args:
+            root (Tk): The Tk window.
+            title (string): The name of the page.
+
+        """
         super(SearchFriends, self).add_elements(root, title)
         label = Label(root, font=self.font1, fg=FIREBRICK1, text=SEARCH_FRIENDS_TEXT)
         label.pack()
@@ -17,6 +35,12 @@ class SearchFriends(Page):
         self.add_friends_scrollbar()
 
     def add_friends_scrollbar(self):
+        """
+
+        The function presents the friends list of the user.
+        It allows him to choose one friend and see his wall.
+
+        """
         sock = socket.socket()
         sock.connect((SERVER, PORT))
         request = "getfriends#" + self.username
@@ -48,6 +72,11 @@ class SearchFriends(Page):
         sock.close()
 
     def show_wall(self):
+        """
+
+        The function gets the selected friend and displays his wall.
+
+        """
         global lb
         index = lb.curselection()
         if index:
@@ -56,6 +85,18 @@ class SearchFriends(Page):
             ScrolledWindow(self.root, selected_user).pack(side="bottom", fill="both", expand=True)
 
     def get_frames(self, username):
+        """
+
+        The function asks from the server for all his media the user has
+        shared in his account (statuses and pictures).
+        The server checks which media frames the clients' computer already has
+        and sends to it only those which it doesn't have to save time and
+        resources.
+
+        Args:
+            username (string): The username of the account.
+
+        """
         directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + username
         if not os.path.exists(directory):
             os.mkdir(directory)

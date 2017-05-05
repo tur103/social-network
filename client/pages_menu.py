@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   pages_menu.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from home_page import *
 from my_wall import *
 from settings_page import *

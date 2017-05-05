@@ -1,5 +1,11 @@
+"""
+Author          :   Or Israeli
+FileName        :   scrolled_window.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 import tkinter as tk
-import getpass
 import glob
 import os
 import tkFontChooser
@@ -28,6 +34,15 @@ class ScrolledWindow(tk.Frame):
         self.show_wall(dirr)
 
     def show_wall(self, dirr):
+        """
+
+        The function presents the wall of the user.
+        It receives the user name and displays on the screen all the
+        statuses and pictures he has shared.
+
+        dirr (string): The name of the user to show his wall.
+
+        """
         if dirr:
             directory = os.path.dirname(os.path.realpath(__file__)) + "/facebook/" + dirr + "/*.*"
         else:

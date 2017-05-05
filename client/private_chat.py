@@ -1,3 +1,10 @@
+"""
+Author          :   Or Israeli
+FileName        :   private_chat.py
+Date            :   5.5.17
+Version         :   1.0
+"""
+
 from page import *
 import socket
 import speech_recognition as sr
@@ -18,6 +25,18 @@ class PrivateChat(Page):
         self.selected_user = None
 
     def add_elements(self, root, title):
+        """
+
+        The function displays the private chat page.
+        The user can see his friends list and choose one to start
+        chatting with. The user can also see who sent him a new
+        message.
+
+        Args:
+            root (Tk): The Tk window.
+            title (string): The name of the page.
+
+        """
         super(PrivateChat, self).add_elements(root, title)
         label = Label(root, font=self.font1, fg=ROYAL_BLUE, text=PRIVATE_CHAT_TEXT)
         label.pack()
@@ -25,6 +44,13 @@ class PrivateChat(Page):
         self.add_friends_scrollbar()
 
     def add_friends_scrollbar(self):
+        """
+
+        The function presents the friends list of the user.
+        It allows him to choose one friend and get into the chat hall
+        with him. It also shows him who has sent him a new message.
+
+        """
         sock = socket.socket()
         sock.connect((SERVER, PORT))
         request = "getfriends#" + self.username
@@ -64,6 +90,13 @@ class PrivateChat(Page):
         sock.close()
 
     def open_chat(self):
+        """
+
+        The function displays the chat hall with the selected friend.
+        In this page the user can see all the history chat with the friend,
+        he can send a new message and record a new message for his comfort.
+
+        """
         global lb
         index = lb.curselection()
         if index:
@@ -117,6 +150,12 @@ class PrivateChat(Page):
             chat_database.close_database()
 
     def record_message(self):
+        """
+
+        The function executes when the user press the record button.
+        It records the user's words and writes them down as a status.
+
+        """
         try:
             global message_entry
             # Record Audio
@@ -125,9 +164,6 @@ class PrivateChat(Page):
                 audio = r.listen(source)
             # Speech recognition using Google Speech Recognition
             try:
-                # for testing purposes, we're just using the default API key
-                # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-                # instead of `r.recognize_google(audio)`
                 message_entry.delete(0, END)
                 message_entry.insert(0, r.recognize_google(audio))
             except sr.UnknownValueError:
@@ -138,6 +174,13 @@ class PrivateChat(Page):
             messagebox.showwarning("ERROR", "No Default Input Device Available")
 
     def send_message(self):
+        """
+
+        The function executes when the user sends a new message.
+        It sends to the server his new message and displays it in the
+        chat hall.
+
+        """
         global message_entry
         message = message_entry.get()
         if message:
@@ -161,12 +204,33 @@ class PrivateChat(Page):
 
     @staticmethod
     def received_message(frm, message):
+        """
+
+        The function receives a new message that was accepted from the server
+        and presents it in the chat hall.
+
+        Args:
+            frm (string): The sender of the new message.
+            message (string): The message that was sent to the user.
+
+        """
         sender = frm + ": "
         chat_box.insert(END, sender + message + "\n")
         chat_box.see(END)
 
     @staticmethod
     def add_unread(username):
+        """
+
+        The function updates the friends list.
+        If a friend sent to the user a new message, the function
+        will mark this friend's chat as unread.
+
+        Args:
+            username (string): The name of the friend that sent the new
+            message.
+
+        """
         for item in range(lb.size()):
             if lb.get(item) == username:
                 lb.delete(item)
